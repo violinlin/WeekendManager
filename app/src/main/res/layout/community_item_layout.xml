@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:layout_height="wrap_content"
+    >
+
+    <RelativeLayout
+        android:id="@+id/item_discover_article_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:padding="16dp"
+        >
+
+        <com.whl.weekendmanager.kit.CircleImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_toRightOf="@id/iv_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="奶油小红房"
+            android:textColor="#000"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_below="@id/tv_name"
+           android:layout_alignLeft="@id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:text="1小时前"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_gray"
+            />
+    </RelativeLayout>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_background"
+        android:layout_below="@id/item_discover_article_top"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:scaleType="centerCrop"
+        fresco:overlayImage="@drawable/article_overlay"
+        />
+
+    <TextView
+        android:id="@+id/tv_label"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_alignBottom="@id/iv_background"
+        android:drawablePadding="4dp"
+        android:drawableLeft="@drawable/concourse_article_tag"
+        android:textColor="#fff"
+        android:text="老北京烤鸭  王府井"
+        />
+
+    <TextView
+        android:layout_above="@id/tv_label"
+        android:id="@+id/tv_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:drawablePadding="4dp"
+        android:textColor="#fff"
+        android:drawableLeft="@drawable/concourse_article_location"
+        android:text="华尔街食堂"
+        />
+
+    <TextView
+        android:layout_above="@id/tv_location"
+        android:id="@+id/tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textColor="#fff"
+        android:ellipsize="end"
+        android:text="这家不挂招牌的店在媒大附近已经开了好些年，一些年轻老师现在依然会回忆他们上学时在这家餐吧吃过的东西～\n\n这儿叫“华尔街食堂”，装修走的是复古美式风格，红皮革卡座透着热辣不羁的气质。店里有大大小小不同的屏幕，放着不同的欧美音乐，金属吧台更是让这里看起来充满活力。最爱这里的一面墙，挂满了历史上经典的黑白照片。"
+        />
+
+    <TextView
+        android:id="@+id/tv_like"
+        android:gravity="center_vertical"
+        android:layout_alignBottom="@id/iv_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#fff"
+        android:layout_alignRight="@id/iv_background"
+        android:drawableLeft="@drawable/concourse_article_enjoy"
+        android:drawablePadding="4dp"
+        android:text="10"
+        />
+
+</RelativeLayout>
