@@ -65,16 +65,7 @@ public class CommunityFragment extends BaseFragment {
     private Adapter recyclerAdapter;
     int currPage = 1;
     private boolean isloadMore = false;//是否是加载更多的状态
-
-    private Handler hanlder = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (headVPAdapter != null && headVPAdapter.getCount() > 0) {
-                headPager.setCurrentItem(msg.arg1);
-            }
-        }
-    };
+    private int pagerPosition = 1;//viewpager 的当前页数
 
     public CommunityFragment() {
         // Required empty public constructor
@@ -222,6 +213,7 @@ public class CommunityFragment extends BaseFragment {
 
                         headPager.setAdapter(headVPAdapter);
                         headVPAdapter.notifyDataSetChanged();
+                        bannerPlay();
 
                     }
 
@@ -407,6 +399,7 @@ public class CommunityFragment extends BaseFragment {
                 @Override
                 public void onPageSelected(int position) {
                     position = position % headViews.size();
+                    pagerPosition = position;
                     for (int i = 0; i < headViews.size(); i++) {
                         if (i == position) {
                             indicatorGroup.getChildAt(position).setSelected(true);
@@ -421,7 +414,7 @@ public class CommunityFragment extends BaseFragment {
 
                 }
             });
-            bannerPlay();
+
             indicatorGroup = (RadioGroup) itemView.findViewById(R.id.radiogroup);
         }
     }
@@ -429,29 +422,30 @@ public class CommunityFragment extends BaseFragment {
     /**
      * 头部headView的轮播
      */
+    Handler handler;
+
     public void bannerPlay() {
+        pagerPosition = 0;
+        if (handler == null) {
+            handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < Integer.MAX_VALUE / 2; i++) {
-                    Message message = hanlder.obtainMessage();
-                    if (i > datas.size()) {
-                        i = i % headViews.size();
-                    }
-                    message.arg1 = i;
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            pagerPosition = (++pagerPosition) % headViews.size();
 
-                    hanlder.sendMessage(message);
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                            headPager.setCurrentItem(pagerPosition);
+                        }
+                    });
+                    Message message = handler.obtainMessage(0);
+                    handler.sendMessageDelayed(message, 2000);
                 }
-
-            }
-        }).start();
-
+            };
+            Message message = handler.obtainMessage(0);
+            handler.sendMessageDelayed(message, 2000);
+        }
     }
 
 

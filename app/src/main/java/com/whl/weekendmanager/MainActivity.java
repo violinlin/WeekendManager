@@ -78,17 +78,17 @@ public class MainActivity extends FragmentActivity {
         final String json = "{\"app_id\":\"200003\",\"params\":\"eyJhY2Nlc3NfdG9rZW4iOiIiLCJjdXJsbmciOiIxMTQuMDY0MzQ5" +
                 "IiwiY3VybGF0IjoiMjIuNTQw\\nNDgzIiwiY2l0eV9pZCI6MTEsImN1cnBhZ2UiOjEsInBlcnBhZ2UiOjIwLCJ2ZXJzaW9uIjoidjI5\\nOCJ9\\n\",\"verify\":\"8f5730ea3afe4b2b7f272e8f9f557b9e\"}";
 
-        NetControl.getInstance().postAsyn("v29/index/forum", new NetControl.StringCallback() {//index/forum HTTP/1.1
-            @Override
-            public void onFailure(Request request, IOException e) {
-                Log.d("whl", request.toString());
-            }
-
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("whl", response.toString());
-            }
-        }, Utils.buildJosonParam("access_token", "", "curlng", "116.370245", "curlat", "40.036975", "city_id", 11, "curpage", 1, "perpage", 20));
+//        NetControl.postAsyn("v29/index/forum", new NetControl.StringCallback() {//index/forum HTTP/1.1
+//            @Override
+//            public void onFailure(Request request, IOException e) {
+//                Log.d("whl", request.toString());
+//            }
+//
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                Log.d("whl", response.toString());
+//            }
+//        }, Utils.buildJosonParam("access_token", "", "curlng", "116.370245", "curlat", "40.036975", "city_id", 11, "curpage", 1, "perpage", 20));
 
     }
 

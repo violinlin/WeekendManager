@@ -37,12 +37,17 @@ public class HeadVPAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView(views.get(position));
+        container.removeView(views.get(position%views.size()));
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        container.addView(views.get(position));
-        return views.get(position);
+        View view=views.get(position%views.size());
+        ViewGroup parent= (ViewGroup) view.getParent();
+        if (parent!=null){
+            parent.removeView(view);
+        }
+        container.addView(view);
+        return view;
     }
 }

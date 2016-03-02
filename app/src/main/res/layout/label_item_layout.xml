@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:background="#f0f0f0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_label_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_label_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="吃" />
+    </LinearLayout>
+
+    <com.whl.weekendmanager.kit.FlowLayout
+        android:id="@+id/fl_flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:horizontal_spacing="10dp"
+        app:vertical_spacing="10dp"></com.whl.weekendmanager.kit.FlowLayout>
+</LinearLayout>

@@ -64,6 +64,18 @@ public class NetControl {
         getInstance()._postAsyn(action, stringCallback, parms);
     }
 
+    public static void postAsynParam(String action, StringCallback stringCallback, String parms) {
+        getInstance()._postAsynParam(action, stringCallback, parms);
+    }
+
+    private void _postAsynParam(String action, StringCallback stringCallback, String parms) {
+        String url = HOST + action;
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(JSON, parms);
+        Request request = new Request.Builder().url(url).post(requestBody).build();
+        deliveryResult(stringCallback, request);
+    }
+
     /**
      * 请求结果的返回和分发
      *
@@ -130,6 +142,7 @@ public class NetControl {
                 .build();
     }
 
+
     /**
      * 自定义的接口回掉接口
      */
@@ -144,7 +157,7 @@ public class NetControl {
      *
      * @ param    参数字符串
      */
-    public String buildJsonParam(String param) {
+    private String buildJsonParam(String param) {
         String params = Base64.encodeToString(param.getBytes(), Base64.DEFAULT);
         String verify = md5((new StringBuilder()).append("200003a1bcdb76fc27edc37184785b333ab").append(params).toString());
         return Utils.buildJosonParam("app_id", "200003", "params", params, "verify", verify);

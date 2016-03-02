@@ -9,7 +9,7 @@ import org.json.JSONObject;
  * DES:广告栏实体类
  * 2016/2/28
  */
-public class HeadFlashBean {
+public class HeadFlashBean extends BaseBean{
 
     /**
      * article_id : 26125

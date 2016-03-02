@@ -19,7 +19,7 @@ import java.util.List;
  * 2016/2/27
  */
 
-public class ArticleBean {
+public class ArticleBean extends BaseBean{
     /**
      * article_id	26707
      * author_info	Object
