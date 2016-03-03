@@ -65,7 +65,7 @@ public class CommunityFragment extends BaseFragment {
     private Adapter recyclerAdapter;
     int currPage = 1;
     private boolean isloadMore = false;//是否是加载更多的状态
-    private int pagerPosition = 1;//viewpager 的当前页数
+    private int pagerPosition = 0;//viewpager 的当前页数
 
     public CommunityFragment() {
         // Required empty public constructor
@@ -214,6 +214,7 @@ public class CommunityFragment extends BaseFragment {
                         headPager.setAdapter(headVPAdapter);
                         headVPAdapter.notifyDataSetChanged();
                         bannerPlay();
+
 
                     }
 
@@ -398,8 +399,8 @@ public class CommunityFragment extends BaseFragment {
 
                 @Override
                 public void onPageSelected(int position) {
-                    position = position % headViews.size();
                     pagerPosition = position;
+                    position = position % headViews.size();
                     for (int i = 0; i < headViews.size(); i++) {
                         if (i == position) {
                             indicatorGroup.getChildAt(position).setSelected(true);
@@ -425,7 +426,7 @@ public class CommunityFragment extends BaseFragment {
     Handler handler;
 
     public void bannerPlay() {
-        pagerPosition = 0;
+        pagerPosition = headViews.size()*100;
         if (handler == null) {
             handler = new Handler() {
                 @Override
@@ -434,9 +435,9 @@ public class CommunityFragment extends BaseFragment {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            pagerPosition = (++pagerPosition) % headViews.size();
+//                            pagerPosition = (++pagerPosition) % headViews.size();
 
-                            headPager.setCurrentItem(pagerPosition);
+                            headPager.setCurrentItem(++pagerPosition);
                         }
                     });
                     Message message = handler.obtainMessage(0);

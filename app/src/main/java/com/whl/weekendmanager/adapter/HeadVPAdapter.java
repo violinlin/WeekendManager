@@ -26,7 +26,7 @@ public class HeadVPAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return views.size();
+        return Integer.MAX_VALUE;
 
     }
 
