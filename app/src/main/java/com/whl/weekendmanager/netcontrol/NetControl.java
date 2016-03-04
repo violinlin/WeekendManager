@@ -55,7 +55,6 @@ public class NetControl {
 
     private void _postAsyn(String action, final StringCallback callBack, String parms) {
         String url = HOST + action;//拼接请求url
-        Log.d("whl", url);
         Request request = buildPostRequest(url, parms);
         deliveryResult(callBack, request);
     }
@@ -72,6 +71,8 @@ public class NetControl {
         String url = HOST + action;
         final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(JSON, parms);
+        Log.d("whl_net", url);
+        Log.d("whl_net", parms.toString());
         Request request = new Request.Builder().url(url).post(requestBody).build();
         deliveryResult(stringCallback, request);
     }

@@ -17,6 +17,7 @@ import com.whl.weekendmanager.R;
 import com.whl.weekendmanager.adapter.AreaGVAdapter;
 import com.whl.weekendmanager.bean.AreaBean;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.util.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +60,7 @@ public class AreaFragment extends BaseFragment {
      * 请求网络数据
      */
     private void requestData() {
-        String param = "{\"app_id\":\"200003\",\"params\":\"eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjoyMCwidmVy\\nc2lvbiI6InYyOTgifQ\\u003d\\u003d\\n\",\"verify\":\"7bdfe3a467310cc5a980e866a310795f\"}";
+//        String param = "{\"app_id\":\"200003\",\"params\":\"eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjowLCJ2ZXJz\\naW9uIjoidjI5OCJ9\\n\",\"verify\":\"9d0a68d3a561120218a176ef533798e3\"}";
         NetControl.getInstance().postAsynParam("v29/discover/grouptaglist", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -82,7 +83,8 @@ public class AreaFragment extends BaseFragment {
                 gvAdapter.notifyDataSetChanged();
 
             }
-        }, param);
+        }, Utils.buildJosonParam("app_id", "200003", "params", "eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjoyMCwidmVy\n" +
+                "c2lvbiI6InYyOTgifQ==\n", "verify", "7bdfe3a467310cc5a980e866a310795f"));
 
     }
 

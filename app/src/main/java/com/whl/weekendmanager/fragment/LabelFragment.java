@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.internal.Util;
 import com.whl.weekendmanager.R;
 import com.whl.weekendmanager.bean.AreaBean;
 import com.whl.weekendmanager.bean.LabelBean;
 import com.whl.weekendmanager.kit.FlowLayout;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.util.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +50,7 @@ public class LabelFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.label_fragment_, container, false);
         initView(view);
+        requestData();
         return view;
     }
 
@@ -79,7 +82,7 @@ public class LabelFragment extends BaseFragment {
      * 请求网络数据
      */
     private void requestData() {
-        String param = "{\"app_id\":\"200003\",\"params\":\"eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjoyMCwidmVy\\nc2lvbiI6InYyOTgifQ\\u003d\\u003d\\n\",\"verify\":\"7bdfe3a467310cc5a980e866a310795f\"}";
+//        String param = "{\"app_id\":\"200003\",\"params\":\"eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjoyMCwidmVy\\nc2lvbiI6InYyOTgifQ\\u003d\\u003d\\n\",\"verify\":\"7bdfe3a467310cc5a980e866a310795f\"}";
         NetControl.getInstance().postAsynParam("v29/discover/grouptaglist", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -89,7 +92,7 @@ public class LabelFragment extends BaseFragment {
 
             @Override
             public void onResponse(JSONObject responseJSON) throws JSONException {
-                Log.d("whl", responseJSON.toString());
+//                Log.d("whl", responseJSON.toString());
                 swipeRefreshLayout.setRefreshing(false);
                 JSONObject body = responseJSON.getJSONObject("body");
                 JSONArray areaList = body.getJSONArray("special_list");
@@ -102,7 +105,8 @@ public class LabelFragment extends BaseFragment {
                 adapter.notifyDataSetChanged();
 
             }
-        }, param);
+        }, Utils.buildJosonParam("app_id", "200003", "params", "eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjowLCJ2ZXJz\n" +
+                "aW9uIjoidjI5OCJ9\n", "verify", "9d0a68d3a561120218a176ef533798e3"));
     }
 
     private class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
@@ -124,6 +128,7 @@ public class LabelFragment extends BaseFragment {
                 textView.setText(tagBean.getTag_name());
                 holder.areaLabel.addView(textView);
             }
+            Log.d("whl", "------------------" + labelBean.getTagList().size());
 
         }
 

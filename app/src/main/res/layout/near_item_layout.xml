@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_below="@id/item_discover_article_top"
+        android:scaleType="centerCrop"
+        fresco:overlayImage="@drawable/article_overlay" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_background"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/home_location"
+        android:drawablePadding="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="老北京烤鸭  王府井"
+        android:textColor="#fff" />
+
+
+    <TextView
+        android:id="@+id/tv_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_background"
+        android:layout_alignRight="@id/iv_background"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/home_uncllected_heart"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:text="10"
+        android:textColor="#fff"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_address"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="华尔街食堂"
+        android:textColor="#ffffff"
+        android:textSize="15sp" />
+
+
+</RelativeLayout>
