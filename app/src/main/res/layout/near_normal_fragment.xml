@@ -1,0 +1,238 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.whl.weekendmanager.fragment.NearFragmentNormal">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swip_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/near_item_bg"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_near_classfy"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="特色标签"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#fff" />
+
+        <TextView
+            android:id="@+id/tv_near_sort"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="排序"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#fff" />
+
+        <TextView
+            android:id="@+id/tv_near_map"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="地图"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+    <!-- tagLayout-->
+    <RelativeLayout
+        android:id="@+id/rl_near_tag_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#d000"
+        android:visibility="gone">
+
+        <RadioGroup
+            android:id="@+id/rg_near_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_near_all"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="15dp"
+                android:drawableTop="@drawable/nearby_fitler_hot_normal"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="#ffffff" />
+
+            <RadioButton
+                android:id="@+id/rb_near_eat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="15dp"
+                android:drawableTop="@drawable/nearby_fitler_hot_normal"
+                android:gravity="center"
+                android:text="吃"
+                android:textColor="#ffffff" />
+
+            <RadioButton
+                android:id="@+id/rb_near_drink"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="15dp"
+                android:drawableTop="@drawable/nearby_fitler_hot_normal"
+                android:gravity="center"
+                android:text="喝"
+                android:textColor="#ffffff" />
+
+            <RadioButton
+                android:id="@+id/rb_near_play"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="15dp"
+                android:drawableTop="@drawable/nearby_fitler_hot_normal"
+                android:gravity="center"
+                android:text="玩"
+                android:textColor="#ffffff" />
+
+            <RadioButton
+                android:id="@+id/rb_near_enjoy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="15dp"
+                android:drawableTop="@drawable/nearby_fitler_hot_normal"
+                android:gravity="center"
+                android:text="乐"
+                android:textColor="#ffffff" />
+        </RadioGroup>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/rg_near_tag"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff" />
+
+        <ListView
+            android:layout_marginTop="10dp"
+            android:id="@+id/lv_near_tag_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/line"
+            android:layout_marginBottom="30dp"></ListView>
+
+        <ImageView
+            android:id="@+id/iv_near_backbtn1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/goto_cancel" />
+    </RelativeLayout>
+
+    <!-- soryLayout-->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rl_nearby_sort_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#d000"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_near_nearby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/near_item_bg"
+            android:clickable="true"
+            android:drawableLeft="@drawable/selector_nearyby_nearby"
+            android:gravity="center"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:text="最近"
+            android:textColor="@color/main_style_text_color" />
+
+        <TextView
+            android:id="@+id/tv_near_latest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_near_nearby"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="@drawable/near_item_bg"
+            android:clickable="true"
+            android:drawableLeft="@drawable/selector_nearby_latest"
+            android:gravity="center"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:text="最新"
+            android:textColor="@color/main_style_text_color" />
+
+        <TextView
+            android:id="@+id/tv_near_hot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_near_nearby"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/near_item_bg"
+            android:clickable="true"
+            android:drawableLeft="@drawable/selector_nearby_hot"
+            android:gravity="center"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:text="最火"
+            android:textColor="@color/main_style_text_color" />
+
+        <ImageView
+            android:id="@+id/iv_near_backbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/goto_cancel" />
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,6 +1,7 @@
 package com.whl.weekendmanager.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.squareup.okhttp.Request;
 import com.whl.weekendmanager.R;
+import com.whl.weekendmanager.activity.HandPickActivity;
 import com.whl.weekendmanager.adapter.AreaGVAdapter;
 import com.whl.weekendmanager.bean.AreaBean;
 import com.whl.weekendmanager.netcontrol.NetControl;
@@ -107,7 +109,12 @@ public class AreaFragment extends BaseFragment {
         gfidView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AreaBean bean = datas.get(position);
                 Toast.makeText(getContext(), datas.get(position).getTag_name(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), HandPickActivity.class);
+                intent.putExtra("name", bean.getTag_name());
+                intent.putExtra("id", bean.getTag_id());
+                startActivity(intent);
             }
         });
         datas = new LinkedList<AreaBean>();

@@ -2,6 +2,7 @@ package com.whl.weekendmanager.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -15,10 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -28,11 +27,14 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.okhttp.Request;
 import com.squareup.picasso.Picasso;
 import com.whl.weekendmanager.R;
+import com.whl.weekendmanager.activity.RecommendInfoActivity;
 import com.whl.weekendmanager.adapter.HeadVPAdapter;
 import com.whl.weekendmanager.bean.ArticleBean;
 import com.whl.weekendmanager.bean.HeadFlashBean;
+import com.whl.weekendmanager.interfacep.OnMyItemClickListener;
 import com.whl.weekendmanager.kit.CircleImageView;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.progress.ProgressHUD;
 import com.whl.weekendmanager.util.Constant;
 import com.whl.weekendmanager.util.Utils;
 
@@ -45,8 +47,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,9 +66,15 @@ public class CommunityFragment extends BaseFragment {
     int currPage = 1;
     private boolean isloadMore = false;//是否是加载更多的状态
     private int pagerPosition = 0;//viewpager 的当前页数
+    private boolean isLoadHead = true;
+
+    public CommunityFragment(boolean isLoadHead) {
+        // Required empty public constructor
+        this.isLoadHead = isLoadHead;
+    }
 
     public CommunityFragment() {
-        // Required empty public constructor
+
     }
 
     ArticleBean headBean = new ArticleBean();
@@ -85,7 +91,10 @@ public class CommunityFragment extends BaseFragment {
 
         headBean.setType(Constant.TYPE_HEAD_VIEW);
         footBean.setType(Constant.TYPE_FOOT_VIEW);
-        datas.add(0, headBean);
+        if (isLoadHead) {
+
+            datas.add(0, headBean);
+        }
         headViews = new LinkedList<View>();
         initView(view);
         return view;
@@ -109,7 +118,13 @@ public class CommunityFragment extends BaseFragment {
         final LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler.setLayoutManager(manager);
-        recyclerAdapter = new Adapter(getContext(), datas);
+        recyclerAdapter = new Adapter(getContext(), datas, new OnMyItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(), RecommendInfoActivity.class);
+                startActivity(intent);
+            }
+        });
         recycler.setAdapter(recyclerAdapter);
         recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int lastPosition;
@@ -143,21 +158,26 @@ public class CommunityFragment extends BaseFragment {
 
 
     private void requestData(final int currentpage) {
+        ProgressHUD.getInstance(getContext()).show();
         NetControl.getInstance().postAsyn("v29/index/forum", new NetControl.StringCallback() {//index/forum HTTP/1.1
             @Override
             public void onFailure(Request request, IOException e) {
+                ProgressHUD.getInstance(getContext()).cancel();
                 swipLayout.setRefreshing(false);
                 Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject response) throws JSONException {
+                ProgressHUD.getInstance(getContext()).cancel();
                 if (isRefresh) {
-                    headViews.clear();
-                    headVPAdapter.notifyDataSetChanged();
-                    indicatorGroup.removeAllViews();
                     datas.clear();
-                    datas.add(headBean);
+                    if (isLoadHead) {
+                        headViews.clear();
+                        headVPAdapter.notifyDataSetChanged();
+                        indicatorGroup.removeAllViews();
+                        datas.add(headBean);
+                    }
                     isRefresh = false;
                     swipLayout.setRefreshing(isRefresh);
                 }
@@ -185,7 +205,7 @@ public class CommunityFragment extends BaseFragment {
                      * 头部广告栏
                      * 只有加载第一页是才刷新广告栏
                      */
-                    if (currentpage == 1) {
+                    if (currentpage == 1 && isLoadHead) {
                         JSONArray flashJSON = body.getJSONArray("flash");
                         HeadFlashBean flashBean;
                         View itemView;
@@ -233,8 +253,10 @@ public class CommunityFragment extends BaseFragment {
     private class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private Context context;
         private List<ArticleBean> datas;
+        private OnMyItemClickListener onMyItemClickListener;
 
-        public Adapter(Context context, List<ArticleBean> datas) {
+        public Adapter(Context context, List<ArticleBean> datas, OnMyItemClickListener onMyItemClickListener) {
+            this.onMyItemClickListener = onMyItemClickListener;
             this.context = context;
             this.datas = datas;
 
@@ -243,10 +265,11 @@ public class CommunityFragment extends BaseFragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             RecyclerView.ViewHolder viewHolder = null;
+
             View view = null;
             if (viewType == Constant.TYPE_NORMAL_VIEW) {
                 view = LayoutInflater.from(context).inflate(R.layout.community_item_layout, parent, false);
-                viewHolder = new NormalHolder(view);
+                viewHolder = new NormalHolder(view, onMyItemClickListener);
             } else if (viewType == Constant.TYPE_HEAD_VIEW) {
                 view = LayoutInflater.from(getContext()).inflate(R.layout.community_head_layout, recycler, false);
                 viewHolder = new HeadHolder(view);
@@ -321,13 +344,13 @@ public class CommunityFragment extends BaseFragment {
 
         holder.dateTV.setText(sDate.format(new Date(System.currentTimeMillis() - bean.getCreated_at())));
         for (int i = 0; i < bean.getContentList().size(); i++) {
-            if (bean.getContentList().get(i).getType() == Constant.CONTENTCH) {
+            if (bean.getContentList().get(i).getType() == Constant.TYPE_CONTENTCH) {
                 holder.infoTV.setText(bean.getContentList().get(i).getCh());
                 break;
             }
         }
         for (int i = 0; i < bean.getContentList().size(); i++) {
-            if (bean.getContentList().get(i).getType() == Constant.CONTENTPIC) {
+            if (bean.getContentList().get(i).getType() == Constant.TYPE_CONTENTPIC) {
                 holder.backgroundIV.setImageURI(Uri.parse(bean.getContentList().get(i).getPic()));
                 break;
             }
@@ -348,7 +371,7 @@ public class CommunityFragment extends BaseFragment {
     /**
      * recyclerview 适配器的 viewHolder normalView
      */
-    private class NormalHolder extends RecyclerView.ViewHolder {
+    private class NormalHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public CircleImageView iconIV;
         public TextView nameTV;
         public TextView dateTV;
@@ -357,9 +380,13 @@ public class CommunityFragment extends BaseFragment {
         public TextView locationTV;
         public TextView labelTV;
         public TextView likeTV;
+        OnMyItemClickListener onMyItemClickListener;
 
-        public NormalHolder(View itemView) {
+        public NormalHolder(View itemView, OnMyItemClickListener onMyItemClickListener) {
+
             super(itemView);
+            this.onMyItemClickListener = onMyItemClickListener;
+            itemView.setOnClickListener(this);
             iconIV = (CircleImageView) itemView.findViewById(R.id.iv_icon);
             nameTV = (TextView) itemView.findViewById(R.id.tv_name);
             dateTV = (TextView) itemView.findViewById(R.id.tv_date);
@@ -369,6 +396,13 @@ public class CommunityFragment extends BaseFragment {
             labelTV = (TextView) itemView.findViewById(R.id.tv_label);
             likeTV = (TextView) itemView.findViewById(R.id.tv_like);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (onMyItemClickListener != null) {
+                onMyItemClickListener.onItemClick(v, getPosition());
+            }
         }
     }
 
@@ -391,6 +425,13 @@ public class CommunityFragment extends BaseFragment {
             super(itemView);
             headPager = (ViewPager) itemView.findViewById(R.id.viewpager);
             headVPAdapter = new HeadVPAdapter(getContext(), headViews);
+            headVPAdapter.setOnMyItemClickListener(new OnMyItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Intent intent = new Intent(getContext(), RecommendInfoActivity.class);
+                    startActivity(intent);
+                }
+            });
             headPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -426,7 +467,7 @@ public class CommunityFragment extends BaseFragment {
     Handler handler;
 
     public void bannerPlay() {
-        pagerPosition = headViews.size()*100;
+        pagerPosition = headViews.size() * 100;
         if (handler == null) {
             handler = new Handler() {
                 @Override

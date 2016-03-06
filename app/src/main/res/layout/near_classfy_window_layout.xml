@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 排序-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_nearby_sort_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d000"
+    android:visibility="visible">
+
+    <TextView
+        android:id="@+id/tv_near_nearby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/near_item_bg"
+        android:clickable="true"
+        android:drawableLeft="@drawable/selector_nearyby_nearby"
+        android:gravity="center"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="最近"
+        android:textColor="@color/main_style_text_color" />
+
+    <TextView
+        android:id="@+id/fragment_nearby_textlatest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_near_nearby"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:background="@drawable/near_item_bg"
+        android:clickable="true"
+        android:drawableLeft="@drawable/selector_nearby_latest"
+        android:gravity="center"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="最新"
+        android:textColor="@color/main_style_text_color" />
+
+    <TextView
+        android:id="@+id/fragment_nearby_texthot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_near_nearby"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/near_item_bg"
+        android:clickable="true"
+        android:drawableLeft="@drawable/selector_nearby_hot"
+        android:gravity="center"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="最火"
+        android:textColor="@color/main_style_text_color" />
+
+    <ImageView
+        android:id="@+id/fragment_nearby_sort_backbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/goto_cancel" />
+</RelativeLayout>

@@ -1,15 +1,12 @@
 package com.whl.weekendmanager;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
-import com.squareup.okhttp.Call;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -21,10 +18,7 @@ import com.whl.weekendmanager.fragment.BaseFragment;
 import com.whl.weekendmanager.fragment.CommunityFragment;
 import com.whl.weekendmanager.fragment.LabelFragment;
 import com.whl.weekendmanager.fragment.NearFragment;
-import com.whl.weekendmanager.netcontrol.NetControl;
-import com.whl.weekendmanager.util.Utils;
-
-import org.json.JSONObject;
+import com.whl.weekendmanager.fragment.NearFragmentNormal;
 
 import java.io.IOException;
 import java.util.LinkedList;

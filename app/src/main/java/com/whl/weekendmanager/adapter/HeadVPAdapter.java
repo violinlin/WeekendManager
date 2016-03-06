@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.whl.weekendmanager.bean.HeadFlashBean;
+import com.whl.weekendmanager.interfacep.OnMyItemClickListener;
 
 import java.util.List;
 
@@ -18,6 +19,12 @@ import java.util.List;
 public class HeadVPAdapter extends PagerAdapter {
     private Context context;
     private List<View> views;
+
+    private OnMyItemClickListener onMyItemClickListener;
+
+    public void setOnMyItemClickListener(OnMyItemClickListener onMyItemClickListener) {
+        this.onMyItemClickListener = onMyItemClickListener;
+    }
 
     public HeadVPAdapter(Context context, List<View> views) {
         this.context = context;
@@ -37,14 +44,20 @@ public class HeadVPAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView(views.get(position%views.size()));
+        container.removeView(views.get(position % views.size()));
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        View view=views.get(position%views.size());
-        ViewGroup parent= (ViewGroup) view.getParent();
-        if (parent!=null){
+    public Object instantiateItem(ViewGroup container, final int position) {
+        View view = views.get(position % views.size());
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMyItemClickListener.onItemClick(v, position % views.size());
+            }
+        });
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if (parent != null) {
             parent.removeView(view);
         }
         container.addView(view);

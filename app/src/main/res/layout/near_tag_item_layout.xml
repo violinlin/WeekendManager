@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:padding="5dp"
+    android:gravity=""
+    android:orientation="horizontal">
+
+    <com.whl.weekendmanager.kit.CircleImageView
+        android:id="@+id/iv_near_tag_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="#4ecb22"
+        />
+
+    <TextView
+        android:id="@+id/tv_near_tag_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="云南味道"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:layout_toRightOf="@id/iv_near_tag_icon"
+        android:layout_marginLeft="3dp"
+        android:textColor="#ffffff" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/arrow_gray"
+        android:layout_gravity="right|center_vertical"
+
+        />
+</RelativeLayout>

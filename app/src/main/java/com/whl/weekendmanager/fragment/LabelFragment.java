@@ -1,6 +1,7 @@
 package com.whl.weekendmanager.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,8 +17,11 @@ import android.widget.TextView;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.internal.Util;
 import com.whl.weekendmanager.R;
+import com.whl.weekendmanager.activity.HandPickActivity;
 import com.whl.weekendmanager.bean.AreaBean;
+import com.whl.weekendmanager.bean.ArticleBean;
 import com.whl.weekendmanager.bean.LabelBean;
+import com.whl.weekendmanager.interfacep.OnMyItemClickListener;
 import com.whl.weekendmanager.kit.FlowLayout;
 import com.whl.weekendmanager.netcontrol.NetControl;
 import com.whl.weekendmanager.util.Utils;
@@ -74,6 +78,16 @@ public class LabelFragment extends BaseFragment {
         recyclerView.setLayoutManager(manager);
         datas = new LinkedList<LabelBean>();
         adapter = new MyAdapter();
+        adapter.setOnMyItemClickListener(new OnMyItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                LabelBean.TAGBean tagBean = ( LabelBean.TAGBean) view.getTag();
+                Intent intent = new Intent(getContext(), HandPickActivity.class);
+                intent.putExtra("name", tagBean.getTag_name());
+                intent.putExtra("id", tagBean.getTag_id());
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
 
     }
@@ -109,7 +123,7 @@ public class LabelFragment extends BaseFragment {
                 "aW9uIjoidjI5OCJ9\n", "verify", "9d0a68d3a561120218a176ef533798e3"));
     }
 
-    private class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
+    private class MyAdapter extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener {
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -126,6 +140,8 @@ public class LabelFragment extends BaseFragment {
                 View view = LayoutInflater.from(getContext()).inflate(R.layout.flow_item_layout, holder.areaLabel, false);
                 TextView textView = (TextView) view.findViewById(R.id.tv_flow_tag);
                 textView.setText(tagBean.getTag_name());
+                view.setTag(tagBean);
+                view.setOnClickListener(this);
                 holder.areaLabel.addView(textView);
             }
             Log.d("whl", "------------------" + labelBean.getTagList().size());
@@ -135,6 +151,17 @@ public class LabelFragment extends BaseFragment {
         @Override
         public int getItemCount() {
             return datas.size();
+        }
+
+        @Override
+        public void onClick(View v) {
+            onMyItemClickListener.onItemClick(v, 0);
+        }
+
+        OnMyItemClickListener onMyItemClickListener;
+
+        public void setOnMyItemClickListener(OnMyItemClickListener onMyItemClickListener) {
+            this.onMyItemClickListener = onMyItemClickListener;
         }
     }
 

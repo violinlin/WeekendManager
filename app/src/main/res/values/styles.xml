@@ -9,4 +9,12 @@
         <attr name="horizontal_spacing" format="dimension" />
         <attr name="vertical_spacing" format="dimension" />
     </declare-styleable>
+
+    <style name="MyDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/flow_item_bg</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 </resources>

@@ -1,8 +1,5 @@
 package com.whl.weekendmanager.bean;
 
-import android.nfc.Tag;
-import android.util.Log;
-
 import com.whl.weekendmanager.util.Constant;
 
 import org.json.JSONArray;
@@ -19,7 +16,7 @@ import java.util.List;
  * 2016/2/27
  */
 
-public class ArticleBean extends BaseBean{
+public class ArticleBean extends BaseBean {
     /**
      * article_id	26707
      * author_info	Object
@@ -43,7 +40,8 @@ public class ArticleBean extends BaseBean{
     private List<ContentBean> contentList;
     private List<TagBean> tagList;
     private PoiInfoBean poiInfoBean;
-    private int type=Constant.TYPE_NORMAL_VIEW;//默认类型为normal
+    private int type = Constant.TYPE_NORMAL_VIEW;//默认类型为normal
+
     public PoiInfoBean getPoiInfoBean() {
         return poiInfoBean;
     }
@@ -340,9 +338,9 @@ public class ArticleBean extends BaseBean{
             ch = jsonObject.optString("ch");
             pic = jsonObject.optString("pic");
             if (ch != null && !ch.equals("")) {
-                type = Constant.CONTENTCH;
+                type = Constant.TYPE_CONTENTCH;
             } else if (pic != null && !pic.equals("")) {
-                type = Constant.CONTENTPIC;
+                type = Constant.TYPE_CONTENTPIC;
             }
 
         }
@@ -391,6 +389,16 @@ public class ArticleBean extends BaseBean{
          */
 
         private String poi_address;
+        private String poi_name;
+
+        public String getPoi_name() {
+            return poi_name;
+        }
+
+        public void setPoi_name(String poi_name) {
+            this.poi_name = poi_name;
+        }
+
         private String poi_hour;
         private int poi_id;
         private double poi_lat;
@@ -402,6 +410,7 @@ public class ArticleBean extends BaseBean{
                 poi_hour = jsonObject.optString("poi_hour");
                 poi_lat = jsonObject.optDouble("poi_lat");
                 poi_lng = jsonObject.optDouble("poi_lng");
+                poi_name = jsonObject.optString("poi_name");
             } catch (Exception e) {
                 e.printStackTrace();
             }
