@@ -1,26 +1,24 @@
 package com.whl.weekendmanager.fragment;
 
 
-import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
 import com.squareup.picasso.Picasso;
 import com.whl.weekendmanager.R;
-import com.whl.weekendmanager.activity.MapActivity;
-import com.whl.weekendmanager.adapter.RecommendInfoAdapter;
 import com.whl.weekendmanager.bean.ArticleBean;
-import com.whl.weekendmanager.dialog.MyDialog;
-import com.whl.weekendmanager.interfacep.MyOnCancelListener;
-import com.whl.weekendmanager.interfacep.OnMyItemClickListener;
 import com.whl.weekendmanager.kit.CircleImageView;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.util.Constant;
 import com.whl.weekendmanager.util.Utils;
 
 import org.json.JSONException;
@@ -29,6 +27,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.whl.weekendmanager.bean.ArticleBean.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,26 +52,20 @@ public class NearRecommendFragment extends android.support.v4.app.Fragment {
     }
 
     private List<ArticleBean.ContentBean> datas;
-    private RecommendInfoAdapter adapter;
-    View headView;
-    ListView recommendLV;
-    private TextView headName;
-    private TextView headDate;
-    private TextView headLocation;
-    private CircleImageView headIcon;
+    RecyclerView recommendLV;
+
     ArticleBean articleBean;
+    MyAdapter adapter;
 
     private void initView(View view) {
-        recommendLV = (ListView) view.findViewById(R.id.lv_recommend_list);
+        recommendLV = (RecyclerView) view.findViewById(R.id.lv_recommend_list);
         datas = new LinkedList<>();
-        adapter = new RecommendInfoAdapter(getContext(), datas);
+        adapter = new MyAdapter();
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recommendLV.setLayoutManager(manager);
         recommendLV.setAdapter(adapter);
-        headView = LayoutInflater.from(getContext()).inflate(
-                R.layout.recommend_head_layout, recommendLV, false);
-        headName = (TextView) headView.findViewById(R.id.tv_name);
-        headDate = (TextView) headView.findViewById(R.id.tv_date);
-        headLocation = (TextView) headView.findViewById(R.id.tv_location);
-        headIcon = (CircleImageView) headView.findViewById(R.id.iv_icon);
+
     }
 
     private void requestData() {
@@ -88,14 +82,10 @@ public class NearRecommendFragment extends android.support.v4.app.Fragment {
                 JSONObject articleInfo = bodyJSON.getJSONObject("article_info");
                 articleBean = new ArticleBean();
                 articleBean.parseJSON(articleInfo);
+                ArticleBean.ContentBean bean = new ArticleBean().new ContentBean();
+                bean.setType(Constant.TYPE_HEAD);
+                datas.add(0, bean);
                 datas.addAll(articleBean.getContentList());
-                recommendLV.addHeaderView(headView);
-                headName.setText(articleBean.getAuthorInfo().getUser_name());
-                headLocation.setText(articleBean.getPoiInfoBean().getPoi_name());
-                headDate.setText(articleBean.getAuthorInfo().getCreated_at() + "");
-                Picasso.with(getContext())
-                        .load(articleBean.getAuthorInfo().getAvatar())
-                        .into(headIcon);
                 adapter.notifyDataSetChanged();
 
             }
@@ -103,6 +93,93 @@ public class NearRecommendFragment extends android.support.v4.app.Fragment {
                 , "params", "eyJhY2Nlc3NfdG9rZW4iOiIiLCJsbmciOiIxMTYuMzY1MzIiLCJsYXQiOiI0MC4wMzMzMjQiLCJh\n" +
                         "cnRpY2xlX2lkIjoyNjAyNywiY2l0eV9pZCI6MTEsInZlcnNpb24iOiJ2Mjk4In0=\n",
                 "verify", "1065a3573f31295842202b08cde7e7e8"));
+    }
+
+
+    private class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            RecyclerView.ViewHolder holder = null;
+            View view;
+            if (viewType == Constant.TYPE_CONTENTPIC) {
+                view = LayoutInflater.from(getContext()).inflate(
+                        R.layout.recommend_pic_item_layout, parent, false);
+                holder = new ItemPICViewHolder(view);
+            } else if (viewType == Constant.TYPE_HEAD) {
+                view = LayoutInflater.from(getContext()).inflate(
+                        R.layout.recommend_head_layout, recommendLV, false);
+                holder = new HeadViewHolder(view);
+            } else if (viewType == Constant.TYPE_CONTENTCH) {
+                view = LayoutInflater.from(getContext()).inflate(
+                        R.layout.recommend_ch_item_layout, parent, false);
+                holder = new ItemCHViewHolder(view);
+            }
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if (holder instanceof ItemPICViewHolder) {
+                ItemPICViewHolder itemViewHolder = (ItemPICViewHolder) holder;
+                Picasso.with(getContext()).load(datas.get(position).getPic()).into(itemViewHolder.picIV);
+            } else if (holder instanceof HeadViewHolder) {
+                HeadViewHolder headViewHolder = (HeadViewHolder) holder;
+                headViewHolder.headName.setText(articleBean.getAuthorInfo().getUser_name());
+                headViewHolder.headLocation.setText(articleBean.getPoiInfoBean().getPoi_name());
+                headViewHolder.headDate.setText(articleBean.getAuthorInfo().getCreated_at() + "");
+                Picasso.with(getContext())
+                        .load(articleBean.getAuthorInfo().getAvatar())
+                        .into(headViewHolder.headIcon);
+            } else if (holder instanceof ItemCHViewHolder) {
+                ItemCHViewHolder itemCHViewHolder = (ItemCHViewHolder) holder;
+                itemCHViewHolder.chTV.setText(datas.get(position).getCh());
+            }
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return datas.size();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return datas.get(position).getType();
+        }
+    }
+
+    private class ItemPICViewHolder extends RecyclerView.ViewHolder {
+        ImageView picIV;
+
+        public ItemPICViewHolder(View itemView) {
+            super(itemView);
+            picIV = (ImageView) itemView.findViewById(R.id.iv_recommend_pic);
+        }
+    }
+
+    private class ItemCHViewHolder extends RecyclerView.ViewHolder {
+        TextView chTV;
+
+        public ItemCHViewHolder(View itemView) {
+            super(itemView);
+            chTV = (TextView) itemView.findViewById(R.id.iv_recommend_ch);
+        }
+    }
+
+    private class HeadViewHolder extends RecyclerView.ViewHolder {
+        TextView headName;
+        TextView headDate;
+        TextView headLocation;
+        CircleImageView headIcon;
+
+        public HeadViewHolder(View itemView) {
+            super(itemView);
+            headName = (TextView) itemView.findViewById(R.id.tv_name);
+            headDate = (TextView) itemView.findViewById(R.id.tv_date);
+            headLocation = (TextView) itemView.findViewById(R.id.tv_location);
+            headIcon = (CircleImageView) itemView.findViewById(R.id.iv_icon);
+        }
     }
 
 

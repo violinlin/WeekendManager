@@ -6,28 +6,40 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:background="#f0f0f0"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="45dp"
+        android:gravity="center_horizontal"
+        android:background="#fff">
 
         <ImageView
             android:id="@+id/iv_label_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:src="@drawable/find_characteristic_label_eat" />
 
         <TextView
             android:id="@+id/tv_label_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="吃" />
-    </LinearLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/iv_label_icon"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="吃"
+            android:textColor="#B4B4B4"
+            android:textSize="20sp" />
+    </RelativeLayout>
 
     <com.whl.weekendmanager.kit.FlowLayout
         android:id="@+id/fl_flow_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
         app:horizontal_spacing="10dp"
         app:vertical_spacing="10dp"></com.whl.weekendmanager.kit.FlowLayout>
 </LinearLayout>

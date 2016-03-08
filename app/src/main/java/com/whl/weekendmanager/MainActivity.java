@@ -1,11 +1,15 @@
 package com.whl.weekendmanager;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -39,14 +43,57 @@ public class MainActivity extends FragmentActivity {
      * 初始化视图控件
      */
     private void initView() {
-        ViewPager viewPager= (ViewPager) findViewById(R.id.viewpager);
-        List<BaseFragment> datas=new LinkedList<>();
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        List<BaseFragment> datas = new LinkedList<>();
         datas.add(new CommunityFragment());
         datas.add(new NearFragment());
         datas.add(new AreaFragment());
         datas.add(new LabelFragment());
-        viewPager.setAdapter(new MainVPAdapter(getSupportFragmentManager(),datas));
+        viewPager.setAdapter(new MainVPAdapter(getSupportFragmentManager(), datas));
+        ImageView backIV = (ImageView) findViewById(R.id.iv_back);
+        backIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
+        ((RadioButton) radioGroup.getChildAt(0)).setTextColor(Color.parseColor("#ffffff"));
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                for (int i = 0; i < radioGroup.getChildCount(); i++) {
+                    RadioButton radioButton = (RadioButton) group.getChildAt(i);
+                    if (radioButton.isChecked()) {
+                        viewPager.setCurrentItem(i);
+                    }
+                }
+            }
+        });
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < radioGroup.getChildCount(); i++) {
+                    RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
+                    if (i == position) {
+                        radioButton.setTextColor(Color.parseColor("#ffffff"));
+
+                    } else {
+                        radioButton.setTextColor(Color.parseColor("#000000"));
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     OkHttpClient client = new OkHttpClient();

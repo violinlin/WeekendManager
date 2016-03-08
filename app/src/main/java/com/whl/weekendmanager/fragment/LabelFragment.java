@@ -81,7 +81,7 @@ public class LabelFragment extends BaseFragment {
         adapter.setOnMyItemClickListener(new OnMyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                LabelBean.TAGBean tagBean = ( LabelBean.TAGBean) view.getTag();
+                LabelBean.TAGBean tagBean = (LabelBean.TAGBean) view.getTag();
                 Intent intent = new Intent(getContext(), HandPickActivity.class);
                 intent.putExtra("name", tagBean.getTag_name());
                 intent.putExtra("id", tagBean.getTag_id());
@@ -136,6 +136,21 @@ public class LabelFragment extends BaseFragment {
         public void onBindViewHolder(MyViewHolder holder, int position) {
             LabelBean labelBean = datas.get(position);
             holder.areaName.setText(labelBean.getGroup_name());
+            switch (labelBean.getGroup_name()) {
+                case "吃":
+                    holder.areaIcon.setImageResource(R.drawable.find_characteristic_label_eat);
+                    break;
+                case "喝":
+                    holder.areaIcon.setImageResource(R.drawable.find_characteristic_label_drink);
+                    break;
+                case "玩":
+                    holder.areaIcon.setImageResource(R.drawable.find_characteristic_label_play);
+                    break;
+                case "逛":
+                    holder.areaIcon.setImageResource(R.drawable.find_characteristic_label_work);
+                    break;
+            }
+//            holder.areaLabel.setLines(4);
             for (LabelBean.TAGBean tagBean : labelBean.getTagList()) {
                 View view = LayoutInflater.from(getContext()).inflate(R.layout.flow_item_layout, holder.areaLabel, false);
                 TextView textView = (TextView) view.findViewById(R.id.tv_flow_tag);

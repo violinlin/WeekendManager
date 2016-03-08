@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,6 +21,8 @@
 
             <TextView
                 android:id="@+id/tv_name"
+                android:textSize="15sp"
+                android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="风度薇热望热热" />
@@ -34,6 +36,8 @@
                 android:drawablePadding="10dp"
                 android:drawableRight="@drawable/arrow_gray"
                 android:gravity="center"
+                android:textSize="15sp"
+                android:padding="10dp"
                 android:text="745m" />
 
             <TextView
@@ -41,6 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name"
                 android:layout_marginTop="10dp"
+                android:textSize="15sp"
+                android:padding="10dp"
                 android:text="fsdfdsfsdf" />
         </RelativeLayout>
 
@@ -48,7 +54,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:padding="10dp"
             android:text="每天10：30" />
     </LinearLayout>
 
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

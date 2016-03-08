@@ -7,7 +7,7 @@
     android:gravity=""
     android:orientation="horizontal">
 
-    <com.whl.weekendmanager.kit.CircleImageView
+    <TextView
         android:id="@+id/iv_near_tag_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"

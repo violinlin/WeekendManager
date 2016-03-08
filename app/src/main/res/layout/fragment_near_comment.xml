@@ -1,6 +1,6 @@
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lv_list_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.whl.weekendmanager.fragment.NearCommentFragment"></ListView>
+    tools:context="com.whl.weekendmanager.fragment.NearCommentFragment"></android.support.v7.widget.RecyclerView>

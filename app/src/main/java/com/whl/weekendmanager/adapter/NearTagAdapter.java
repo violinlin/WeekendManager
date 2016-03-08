@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
@@ -29,10 +31,12 @@ import java.util.List;
 public class NearTagAdapter extends BaseAdapter {
     private List<NearTagBean> datas;
     private Context context;
+    Drawable shape;
 
     public NearTagAdapter(Context context, List<NearTagBean> datas) {
         this.datas = datas;
         this.context = context;
+
     }
 
     @Override
@@ -56,8 +60,7 @@ public class NearTagAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.near_tag_item_layout, parent, false);
             viewHolder = new MyViewHolder();
-            viewHolder.iconIV = (CircleImageView) convertView.findViewById(R.id.iv_near_tag_icon);
-
+            viewHolder.iconIV = (TextView) convertView.findViewById(R.id.iv_near_tag_icon);
             viewHolder.nameTV = (TextView) convertView.findViewById(R.id.tv_near_tag_name);
             convertView.setTag(viewHolder);
 
@@ -66,12 +69,15 @@ public class NearTagAdapter extends BaseAdapter {
         }
         NearTagBean bean = datas.get(position);
         viewHolder.nameTV.setText(bean.getTag_name());
-        viewHolder.iconIV.setBackgroundColor(Color.parseColor("#" + bean.getTag_color()));
+//        viewHolder.iconIV.setBackgroundColor(Color.parseColor("#" + bean.getTag_color()));
+        shape = context.getResources().getDrawable(R.drawable.round_shape);
+        shape.setColorFilter(Color.parseColor("#" + bean.getTag_color()), PorterDuff.Mode.ADD);
+        viewHolder.iconIV.setBackgroundDrawable(shape);
         return convertView;
     }
 
     private class MyViewHolder {
-        public CircleImageView iconIV;
+        public TextView iconIV;
         public TextView nameTV;
     }
 }

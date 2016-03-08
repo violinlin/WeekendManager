@@ -21,6 +21,7 @@ public class FlowLayout extends ViewGroup {
 
     private int mVerticalSpacing;
     private int mHorizontalSpacing;
+    private int line;
 
     public FlowLayout(Context context) {
         super(context);
@@ -35,6 +36,7 @@ public class FlowLayout extends ViewGroup {
                     R.styleable.FlowLayout_horizontal_spacing, DEFAULT_HORIZONTAL_SPACING);
             mVerticalSpacing = a.getDimensionPixelSize(
                     R.styleable.FlowLayout_vertical_spacing, DEFAULT_VERTICAL_SPACING);
+            line = a.getInt(R.styleable.FlowLayout_line, Integer.MAX_VALUE);
         } finally {
             a.recycle();
         }
@@ -117,14 +119,22 @@ public class FlowLayout extends ViewGroup {
 
             lineHeight = Math.max(childHeight, lineHeight);
 
-            if (childLeft + childWidth + paddingRight > myWidth) {
+            if (childLeft + childWidth + paddingRight > myWidth && line > 0) {
                 childLeft = paddingLeft;
                 childTop += mVerticalSpacing + lineHeight;
                 lineHeight = childHeight;
+                line--;
             }
 
             childView.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
             childLeft += childWidth + mHorizontalSpacing;
         }
+
+    }
+
+    public void setLines(int line) {
+        this.line = line;
+        requestLayout();
+        invalidate();
     }
 }

@@ -76,6 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#d000"
+        android:clickable="true"
         android:visibility="gone">
 
         <RadioGroup
@@ -177,6 +178,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#d000"
+        android:clickable="true"
         android:visibility="gone">
 
         <TextView
@@ -184,7 +186,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/near_item_bg"
             android:clickable="true"
             android:drawableLeft="@drawable/selector_nearyby_nearby"
@@ -216,7 +218,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_near_nearby"
             android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/near_item_bg"
             android:clickable="true"
             android:drawableLeft="@drawable/selector_nearby_hot"

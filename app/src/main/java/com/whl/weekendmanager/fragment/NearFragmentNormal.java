@@ -301,7 +301,7 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
         mapTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChangeFragmentListener.changeFragment();
+                onChangeFragmentListener.changeFragment(datas);
             }
         });
     }

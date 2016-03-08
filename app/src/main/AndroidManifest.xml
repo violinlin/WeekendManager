@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="请输入您的用户Key" />
+            android:value="5075d2259db09c1a9881fe3f7deaf696" />
 
         <activity
             android:name=".MainActivity"
@@ -44,8 +44,9 @@
         <activity
             android:name=".activity.NearRecommendActivity"
             android:label="@string/title_activity_near_recommend"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
+        <service android:name="com.amap.api.location.APSService"></service>
     </application>
 
 </manifest>

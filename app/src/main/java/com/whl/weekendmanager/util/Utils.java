@@ -20,10 +20,10 @@ public class Utils {
      */
     public static String buildJosonParam(Object... param) {
         JSONObject jsonObject = new JSONObject();
-        if (param!=null){
-            for (int i=0;i<param.length-1;i+=2){
+        if (param != null) {
+            for (int i = 0; i < param.length - 1; i += 2) {
                 try {
-                    jsonObject.put((String) param[i],param[i+1]);
+                    jsonObject.put((String) param[i], param[i + 1]);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -47,4 +47,16 @@ public class Utils {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
+
+
+    /**
+     * String to double
+     */
+
+    public static  double str2double(String str) {
+        return Double.parseDouble(str);
+    }
+
+    ;
+
 }

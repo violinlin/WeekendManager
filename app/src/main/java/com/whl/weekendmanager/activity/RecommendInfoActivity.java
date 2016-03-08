@@ -85,6 +85,12 @@ public class RecommendInfoActivity extends Activity {
                         @Override
                         public void onItemClick(View view, int position) {
                             Intent intent = new Intent(RecommendInfoActivity.this, MapActivity.class);
+                            double lat = articleBean.getPoiInfoBean().getPoi_lat();
+                            double lng = articleBean.getPoiInfoBean().getPoi_lng();
+                            String name = articleBean.getPoiInfoBean().getPoi_name();
+                            intent.putExtra("lat", lat);
+                            intent.putExtra("lng", lng);
+                            intent.putExtra("name", name);
                             startActivity(intent);
                         }
                     });

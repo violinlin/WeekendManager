@@ -1,5 +1,9 @@
 package com.whl.weekendmanager.interfacep;
 
+import com.whl.weekendmanager.bean.NearBean;
+
+import java.util.List;
+
 /**
  * ProjectName : com.whl.weekendmanager
  * Created by : whl
@@ -7,5 +11,5 @@ package com.whl.weekendmanager.interfacep;
  * 2016/3/6
  */
 public interface OnChangeFragmentListener {
-    void changeFragment();
+    void changeFragment(List<NearBean>beans);
 }

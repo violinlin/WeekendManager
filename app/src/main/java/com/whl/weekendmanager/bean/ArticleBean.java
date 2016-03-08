@@ -334,6 +334,15 @@ public class ArticleBean extends BaseBean {
         private String pic;
         private int type;
 
+        public int getViewType() {
+            return viewType;
+        }
+
+        public void setViewType(int viewType) {
+            this.viewType = viewType;
+        }
+
+        private int viewType=0;
         public void parseJSON(JSONObject jsonObject) {
             ch = jsonObject.optString("ch");
             pic = jsonObject.optString("pic");

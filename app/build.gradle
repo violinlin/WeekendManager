@@ -29,5 +29,5 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.8.1'
     compile files('libs/AMap_2DMap_V2.8.1_20160202.jar')
     compile 'com.android.support:design:23.1.0'
-
+    compile files('libs/AMap_Location_V2.4.0_20160308.jar')
 }

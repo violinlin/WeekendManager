@@ -220,7 +220,7 @@ public class CommunityFragment extends BaseFragment {
                             }
                             indicator = LayoutInflater.from(getContext()).inflate(R.layout.indicator_item_layout, headPager, false);
                             RadioButton radioButton = (RadioButton) indicator.findViewById(R.id.radioButton);
-                            RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(Utils.dip2px(getContext(), 15f), Utils.dip2px(getContext(), 15f));
+                            RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(Utils.dip2px(getContext(), 10f), Utils.dip2px(getContext(), 10f));
 //                            if (i != 0) {
                             layoutParams.leftMargin = Utils.px2dip(getContext(), 20);
                             indicatorGroup.addView(radioButton, layoutParams);
