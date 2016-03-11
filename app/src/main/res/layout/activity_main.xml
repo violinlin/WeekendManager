@@ -8,12 +8,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="#52abff">
+        android:background="#02C6B4">
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:src="@drawable/back_icon" />
@@ -31,43 +31,51 @@
         android:id="@+id/radiogroup"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="#52abff"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <RadioButton
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/rb_index"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:button="@null"
+            android:drawableTop="@drawable/index_selector"
             android:gravity="center_horizontal"
             android:text="社区"
             android:textSize="20sp" />
 
         <RadioButton
+            android:id="@+id/rb_near"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
+            android:drawableTop="@drawable/search_selector"
             android:gravity="center"
             android:text="附近"
             android:textSize="20sp" />
 
         <RadioButton
+            android:id="@+id/rb_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
+            android:drawableTop="@drawable/me_selector"
             android:gravity="center"
             android:text="地区"
             android:textSize="20sp" />
 
         <RadioButton
+            android:id="@+id/rb_news"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
+            android:drawableTop="@drawable/news_selector"
             android:gravity="center"
             android:text="标签"
             android:textSize="20sp" />

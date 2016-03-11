@@ -1,11 +1,11 @@
 package com.whl.weekendmanager.fragment;
 
 
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +28,12 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.whl.weekendmanager.bean.ArticleBean.*;
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class NearRecommendFragment extends android.support.v4.app.Fragment {
 
-
+    private int selectID =26026;
     public NearRecommendFragment() {
         // Required empty public constructor
     }
@@ -47,6 +45,7 @@ public class NearRecommendFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_near_recommend, container, false);
         initView(view);
+        selectID=getArguments().getInt("id");
         requestData();
         return view;
     }
@@ -70,7 +69,7 @@ public class NearRecommendFragment extends android.support.v4.app.Fragment {
 
     private void requestData() {
 //        http://apiv30.chengmi.com/v29/article/view HTTP/1.1
-        NetControl.getInstance().postAsynParam("v29/article/view", new NetControl.StringCallback() {
+        NetControl.getInstance().postAsyn("v29/article/view", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
 
@@ -78,6 +77,7 @@ public class NearRecommendFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onResponse(JSONObject responseJSON) throws JSONException {
+                Log.d("whl",responseJSON.toString());
                 JSONObject bodyJSON = responseJSON.getJSONObject("body");
                 JSONObject articleInfo = bodyJSON.getJSONObject("article_info");
                 articleBean = new ArticleBean();
@@ -89,10 +89,8 @@ public class NearRecommendFragment extends android.support.v4.app.Fragment {
                 adapter.notifyDataSetChanged();
 
             }
-        }, Utils.buildJosonParam("app_id", "200003"
-                , "params", "eyJhY2Nlc3NfdG9rZW4iOiIiLCJsbmciOiIxMTYuMzY1MzIiLCJsYXQiOiI0MC4wMzMzMjQiLCJh\n" +
-                        "cnRpY2xlX2lkIjoyNjAyNywiY2l0eV9pZCI6MTEsInZlcnNpb24iOiJ2Mjk4In0=\n",
-                "verify", "1065a3573f31295842202b08cde7e7e8"));
+        }, Utils.buildJosonParam("access_token","","lng","116.321853",
+                "lat","39.954206","article_id",selectID,"city_id",11,"version","v298"));
     }
 
 

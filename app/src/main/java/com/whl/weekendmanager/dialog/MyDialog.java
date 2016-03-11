@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whl.weekendmanager.R;
@@ -50,6 +51,8 @@ public class MyDialog extends Dialog implements View.OnClickListener {
         dateTV = (TextView) findViewById(R.id.dialog_tv_date);
         cancelIV = (ImageView) findViewById(R.id.dialog_iv_cancel);
         cancelIV.setOnClickListener(this);
+        RelativeLayout relativeLayout= (RelativeLayout) findViewById(R.id.dialog_location_layout);
+        relativeLayout.setOnClickListener(this);
     }
 
     public void setLocation(String location) {
@@ -88,6 +91,7 @@ public class MyDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.dialog_tv_location:
+            case R.id.dialog_location_layout:
                 if (onMyItemClickListener != null) {
                     onMyItemClickListener.onItemClick(v, 0);
                 }

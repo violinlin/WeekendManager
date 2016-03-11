@@ -58,15 +58,27 @@ public class MainActivity extends FragmentActivity {
             }
         });
         final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
-        ((RadioButton) radioGroup.getChildAt(0)).setTextColor(Color.parseColor("#ffffff"));
+        final RadioButton indexRB = (RadioButton) findViewById(R.id.rb_index);
+        final RadioButton nearRB = (RadioButton) findViewById(R.id.rb_near);
+        final RadioButton meRB = (RadioButton) findViewById(R.id.rb_me);
+        final RadioButton newsRB = (RadioButton) findViewById(R.id.rb_news);
+        indexRB.setChecked(true);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                for (int i = 0; i < radioGroup.getChildCount(); i++) {
-                    RadioButton radioButton = (RadioButton) group.getChildAt(i);
-                    if (radioButton.isChecked()) {
-                        viewPager.setCurrentItem(i);
-                    }
+                switch (checkedId) {
+                    case R.id.rb_index:
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.rb_near:
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case R.id.rb_me:
+                        viewPager.setCurrentItem(2);
+                        break;
+                    case R.id.rb_news:
+                        viewPager.setCurrentItem(3);
+                        break;
                 }
             }
         });
@@ -78,15 +90,8 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int position) {
-                for (int i = 0; i < radioGroup.getChildCount(); i++) {
-                    RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
-                    if (i == position) {
-                        radioButton.setTextColor(Color.parseColor("#ffffff"));
-
-                    } else {
-                        radioButton.setTextColor(Color.parseColor("#000000"));
-                    }
-                }
+                    RadioButton radioButton = (RadioButton) radioGroup.getChildAt(position);
+                    radioButton.setChecked(true);
             }
 
             @Override
@@ -96,48 +101,5 @@ public class MainActivity extends FragmentActivity {
         });
     }
 
-    OkHttpClient client = new OkHttpClient();
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    String post(String url, String json) throws IOException {
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        Response response = client.newCall(request).execute();
-        if (response.isSuccessful()) {
-            return response.body().string();
-        } else {
-            throw new IOException("Unexpected code " + response);
-        }
-    }
-
-    public void click(View view) {
-
-        final String url = "http://apiv30.chengmi.com/v29/index/main";
-        final String json = "{\"app_id\":\"200003\",\"params\":\"eyJhY2Nlc3NfdG9rZW4iOiIiLCJjdXJsbmciOiIxMTQuMDY0MzQ5" +
-                "IiwiY3VybGF0IjoiMjIuNTQw\\nNDgzIiwiY2l0eV9pZCI6MTEsImN1cnBhZ2UiOjEsInBlcnBhZ2UiOjIwLCJ2ZXJzaW9uIjoidjI5\\nOCJ9\\n\",\"verify\":\"8f5730ea3afe4b2b7f272e8f9f557b9e\"}";
-
-//        NetControl.postAsyn("v29/index/forum", new NetControl.StringCallback() {//index/forum HTTP/1.1
-//            @Override
-//            public void onFailure(Request request, IOException e) {
-//                Log.d("whl", request.toString());
-//            }
-//
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Log.d("whl", response.toString());
-//            }
-//        }, Utils.buildJosonParam("access_token", "", "curlng", "116.370245", "curlat", "40.036975", "city_id", 11, "curpage", 1, "perpage", 20));
-
-    }
-
-    public void base64click(View view) {
-        String str = "eyJhY2Nlc3NfdG9rZW4iOiIiLCJjdXJsbmciOiIxMTYuMzcwMjQ1IiwiY3VybGF0IjoiNDAuMDM2\n" +
-                "    OTc1IiwiY2l0eV9pZCI6MTEsImN1cnBhZ2UiOjEsInBlcnBhZ2UiOjIwfQ==";
-        byte[] params = Base64.decode(str.getBytes(), Base64.DEFAULT);
-        Log.d("whl", new String(params));
-
-    }
 }

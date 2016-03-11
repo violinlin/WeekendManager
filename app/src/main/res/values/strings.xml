@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeekendManager</string>
+    <string name="app_name">周末管家</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -10,4 +10,5 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_hand_pick">HandPickActivity</string>
     <string name="title_activity_near_recommend">NearRecommendActivity</string>
+    <string name="title_activity_spalash">SpalashActivity</string>
 </resources>

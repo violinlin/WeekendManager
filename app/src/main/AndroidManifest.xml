@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.whl.weekendmanager">
+    package="com.whl.weekendmanager" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 高德地图使用权限 -->
@@ -18,7 +18,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="5075d2259db09c1a9881fe3f7deaf696" />
@@ -26,27 +26,36 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+
+        </activity>
+        <activity
+            android:name=".activity.RecommendInfoActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
+        <activity
+            android:name=".activity.MapActivity"
+            android:label="@string/title_activity_map"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
+        <activity
+            android:name=".activity.HandPickActivity"
+            android:label="@string/title_activity_hand_pick"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activity.NearRecommendActivity"
+            android:label="@string/title_activity_near_recommend"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
+        <activity
+            android:name=".activity.SpalashActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RecommendInfoActivity" />
-        <activity
-            android:name=".activity.MapActivity"
-            android:label="@string/title_activity_map"></activity>
-        <activity
-            android:name=".activity.HandPickActivity"
-            android:label="@string/title_activity_hand_pick"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity
-            android:name=".activity.NearRecommendActivity"
-            android:label="@string/title_activity_near_recommend"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-
-        <service android:name="com.amap.api.location.APSService"></service>
     </application>
 
 </manifest>

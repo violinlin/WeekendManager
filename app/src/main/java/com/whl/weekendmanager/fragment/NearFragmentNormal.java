@@ -19,9 +19,11 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.okhttp.Request;
@@ -143,6 +145,7 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
                 intent.putExtra("icon", datas.get(position).getPic());
                 intent.putExtra("name", datas.get(position).getSection_title());
                 intent.putExtra("id", datas.get(position).getSection_id());
+                intent.putExtra("poi", datas.get(position).getPoiInfo());
                 startActivity(intent);
             }
         });
@@ -162,6 +165,38 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
     private void initClassFyLayout(View view) {
         classfyLayout = (RelativeLayout) view.findViewById(R.id.rl_near_tag_layout);
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.rg_near_tag);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_near_eat:
+                        groupID = "1";
+                        break;
+                    case R.id.rb_near_drink:
+                        groupID = "2";
+                        Toast.makeText(getContext(),"喝",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.rb_near_play:
+                        groupID = "3";
+                        break;
+                    case R.id.rb_near_enjoy:
+                        groupID = "4";
+                        break;
+                    case R.id.rb_near_all:
+                        groupID = "0";
+                        break;
+                }
+                if (tagDatas != null) {
+                    tagDatas.clear();
+                }
+                requestTagData(tagAdapter, tagDatas);
+
+            }
+        });
+        RadioButton eatRB = (RadioButton) view.findViewById(R.id.rb_near_eat);
+        RadioButton drinkRB = (RadioButton) view.findViewById(R.id.rb_near_drink);
+        RadioButton playRB = (RadioButton) view.findViewById(R.id.rb_near_play);
+        RadioButton enjoyRB = (RadioButton) view.findViewById(R.id.rb_near_enjoy);
         ListView tagList = (ListView) view.findViewById(R.id.lv_near_tag_list);
         tagAdapter = new NearTagAdapter(getContext(), tagDatas);
         tagList.setAdapter(tagAdapter);
@@ -192,8 +227,10 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
      * @param tagAdapter
      * @param tagDatas   http://apiv30.chengmi.com/v29/section/grouptaglist
      */
+    public String groupID = "0";
+
     private void requestTagData(final NearTagAdapter tagAdapter, final List<NearTagBean> tagDatas) {
-        NetControl.getInstance().postAsynParam("v29/section/grouptaglist", new NetControl.StringCallback() {
+        NetControl.getInstance().postAsyn("v29/section/grouptaglist", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
 
@@ -216,15 +253,31 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
                 tagAdapter.notifyDataSetChanged();
 
             }
-        }, Utils.buildJosonParam("app_id", "200003",
-                "params", "eyJhY2Nlc3NfdG9rZW4iOiIiLCJjYXRfdHlwZSI6Im5lYXJieSIsInRhZ19pZCI6Ii0xIiwiY3Vy\n" +
-                        "bGF0IjoiNDAuMDMzMzI3IiwiY3VybG5nIjoiMTE2LjM2NDk3MSIsInNvcnR3YXkiOiJuZWFyYnki\n" +
-                        "LCJncm91cF9pZCI6IjEiLCJsb2NhbF90YWdpZCI6MCwibG9jYWxfdGFnbGFiZWxfaWQiOjAsIm90\n" +
-                        "aGVyX3VpZCI6MCwicGVycGFnZSI6MjAsImxvY2FsX2FyZWFpZCI6MCwiY3VycGFnZSI6MSwiY2l0\n" +
-                        "eV9pZCI6MTEsInZlcnNpb24iOiJ2Mjk4In0=\n",
-                "verify", "668c1aab4bb795f20cc09549e25f40b4"
-        ));
-
+        }, Utils.buildJosonParam("access_token", "",
+                "cat_type", "nearby",
+                "tag_id", "-1",
+                "curlat", "39.95445",
+                "curlng", "116.321457",
+                "sortway", "nearby",
+                "group_id", groupID,//全部0 吃1 喝2 玩 3逛4
+                "local_tagid", 0,
+                "local_taglabel_id", 0,
+                "other_uid", 0,
+                "perpage", 20,
+                "local_areaid", 0,
+                "curpage", 1,
+                "city_id", 11,
+                "version", "v298"));
+/**
+ * Utils.buildJosonParam("app_id", "200003",
+ "params", "eyJhY2Nlc3NfdG9rZW4iOiIiLCJjYXRfdHlwZSI6Im5lYXJieSIsInRhZ19pZCI6Ii0xIiwiY3Vy\n" +
+ "bGF0IjoiNDAuMDMzMzI3IiwiY3VybG5nIjoiMTE2LjM2NDk3MSIsInNvcnR3YXkiOiJuZWFyYnki\n" +
+ "LCJncm91cF9pZCI6IjEiLCJsb2NhbF90YWdpZCI6MCwibG9jYWxfdGFnbGFiZWxfaWQiOjAsIm90\n" +
+ "aGVyX3VpZCI6MCwicGVycGFnZSI6MjAsImxvY2FsX2FyZWFpZCI6MCwiY3VycGFnZSI6MSwiY2l0\n" +
+ "eV9pZCI6MTEsInZlcnNpb24iOiJ2Mjk4In0=\n",
+ "verify", "668c1aab4bb795f20cc09549e25f40b4"
+ )
+ */
     }
 
     //初始化排序布局

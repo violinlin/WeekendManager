@@ -21,7 +21,7 @@ public class ProgressHUD {
     private int retaincount;
 
     private ProgressHUD(Context context) {
-        dialog = new Dialog(context);// 创建自定义样式dialog
+        dialog = new Dialog(context,R.style.MyDialog);// 创建自定义样式dialog
         dialog.setContentView(View.inflate(context, R.layout.progress_hud_view, null));
         dialog.setCanceledOnTouchOutside(true);
     }

@@ -1,5 +1,6 @@
 package com.whl.weekendmanager.activity;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import com.whl.weekendmanager.util.Utils;
 
 import java.util.List;
 
-public class MapActivity extends AppCompatActivity implements LocationSource,
+public class MapActivity extends Activity implements LocationSource,
         AMapLocationListener {
 
     private MapView mapView;

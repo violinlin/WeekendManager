@@ -4,13 +4,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * ProjectName : com.whl.weekendmanager
  * Created by : whl
  * DES:附近模块的实体类
  * 2016/3/3
  */
-public class NearBean extends BaseBean {
+public class NearBean extends BaseBean implements Serializable{
 
 
     private int fav_count;
@@ -76,7 +78,7 @@ public class NearBean extends BaseBean {
         return section_title;
     }
 
-    public class PoiInfo extends BaseBean {
+    public class PoiInfo extends BaseBean implements Serializable{
 
 
         /**

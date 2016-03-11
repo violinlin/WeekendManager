@@ -93,7 +93,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawablePadding="15dp"
-                android:drawableTop="@drawable/nearby_fitler_hot_normal"
+                android:drawableTop="@drawable/near_all_selector"
                 android:gravity="center"
                 android:text="全部"
                 android:textColor="#ffffff" />
@@ -105,7 +105,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawablePadding="15dp"
-                android:drawableTop="@drawable/nearby_fitler_hot_normal"
+                android:drawableTop="@drawable/near_eat_selector"
                 android:gravity="center"
                 android:text="吃"
                 android:textColor="#ffffff" />
@@ -117,7 +117,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawablePadding="15dp"
-                android:drawableTop="@drawable/nearby_fitler_hot_normal"
+                android:drawableTop="@drawable/near_drink_selector"
                 android:gravity="center"
                 android:text="喝"
                 android:textColor="#ffffff" />
@@ -129,7 +129,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawablePadding="15dp"
-                android:drawableTop="@drawable/nearby_fitler_hot_normal"
+                android:drawableTop="@drawable/near_play_selector"
                 android:gravity="center"
                 android:text="玩"
                 android:textColor="#ffffff" />
@@ -141,9 +141,9 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawablePadding="15dp"
-                android:drawableTop="@drawable/nearby_fitler_hot_normal"
+                android:drawableTop="@drawable/near_shop_selector"
                 android:gravity="center"
-                android:text="乐"
+                android:text="逛"
                 android:textColor="#ffffff" />
         </RadioGroup>
 
@@ -156,12 +156,12 @@
             android:background="#ffffff" />
 
         <ListView
-            android:layout_marginTop="10dp"
             android:id="@+id/lv_near_tag_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/line"
-            android:layout_marginBottom="30dp"></ListView>
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp"></ListView>
 
         <ImageView
             android:id="@+id/iv_near_backbtn1"

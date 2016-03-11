@@ -67,6 +67,7 @@ public class CommunityFragment extends BaseFragment {
     private boolean isloadMore = false;//是否是加载更多的状态
     private int pagerPosition = 0;//viewpager 的当前页数
     private boolean isLoadHead = true;
+    private List<HeadFlashBean> headFlashBeans;
 
     public CommunityFragment(boolean isLoadHead) {
         // Required empty public constructor
@@ -88,7 +89,7 @@ public class CommunityFragment extends BaseFragment {
         View view = null;
         view = inflater.inflate(R.layout.community_fragment, container, false);
         datas = new LinkedList<ArticleBean>();
-
+        headFlashBeans = new LinkedList<>();
         headBean.setType(Constant.TYPE_HEAD_VIEW);
         footBean.setType(Constant.TYPE_FOOT_VIEW);
         if (isLoadHead) {
@@ -122,6 +123,7 @@ public class CommunityFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), RecommendInfoActivity.class);
+                intent.putExtra("articleid", datas.get(position).getArticle_id());
                 startActivity(intent);
             }
         });
@@ -154,6 +156,7 @@ public class CommunityFragment extends BaseFragment {
         });
 //        addHeadView(recyclerAdapter);
         requestData(1);
+
     }
 
 
@@ -174,6 +177,7 @@ public class CommunityFragment extends BaseFragment {
                     datas.clear();
                     if (isLoadHead) {
                         headViews.clear();
+                        headFlashBeans.clear();
                         headVPAdapter.notifyDataSetChanged();
                         indicatorGroup.removeAllViews();
                         datas.add(headBean);
@@ -229,6 +233,7 @@ public class CommunityFragment extends BaseFragment {
                                 radioButton.setSelected(true);
                             }
                             headViews.add(itemView);
+                            headFlashBeans.add(flashBean);
                         }
 
                         headPager.setAdapter(headVPAdapter);
@@ -429,6 +434,7 @@ public class CommunityFragment extends BaseFragment {
                 @Override
                 public void onItemClick(View view, int position) {
                     Intent intent = new Intent(getContext(), RecommendInfoActivity.class);
+                    intent.putExtra("articleid", headFlashBeans.get(position).getArticle_id());
                     startActivity(intent);
                 }
             });

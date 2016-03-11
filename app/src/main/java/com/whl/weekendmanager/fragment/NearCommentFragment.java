@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ import java.util.List;
  */
 public class NearCommentFragment extends android.support.v4.app.Fragment {
 
-
+    private int secectionid;
     private MyAdapter adapter;
     private List<CommentBean> datas;
 
@@ -48,13 +49,14 @@ public class NearCommentFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_near_comment, container, false);
         initView(view);
+        secectionid = getArguments().getInt("id", 1229);
         requestData();
         return view;
     }
 
     private void requestData() {
 //        http://apiv30.chengmi.com/v29/remark/sectionremarklist HTTP/1.1
-        NetControl.getInstance().postAsynParam("v29/remark/sectionremarklist", new NetControl.StringCallback() {
+        NetControl.getInstance().postAsyn("v29/remark/sectionremarklist", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
 
@@ -62,6 +64,7 @@ public class NearCommentFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onResponse(JSONObject responseJSON) throws JSONException {
+//                Log.d("whl",responseJSON.toString());
                 JSONObject body = responseJSON.getJSONObject("body");
                 JSONArray array = body.getJSONArray("remark_list");
                 CommentBean bean;
@@ -74,13 +77,24 @@ public class NearCommentFragment extends android.support.v4.app.Fragment {
                 adapter.notifyDataSetChanged();
 
             }
-        }, Utils.buildJosonParam(
-                "app_id", "200003"
-                , "params", "eyJhY2Nlc3NfdG9rZW4iOiIiLCJjdXJwYWdlIjoxLCJwZXJwYWdlIjoyMCwicmVtYXJrX3R5cGUi\n" +
-                        "Oi0xLCJzZWN0aW9uX2lkIjoyMTY2LCJ2ZXJzaW9uIjoidjI5OCJ9\n"
-                , "verify", "1bc8efad21b6f4e0b0113600e581d973"));
+        }, Utils.buildJosonParam("access_token", "",
+                "curpage", 1,
+                "perpage", 20,
+                "remark_type", -1,
+                "section_id", secectionid,
+                "version", "v298"
+        ));
     }
 
+    /**
+     * Utils.buildJosonParam(
+     * "app_id", "200003"
+     * , "params", "eyJhY2Nlc3NfdG9rZW4iOiIiLCJjdXJwYWdlIjoxLCJwZXJwYWdlIjoyMCwicmVtYXJrX3R5cGUi\n" +
+     * "Oi0xLCJzZWN0aW9uX2lkIjoyMTY2LCJ2ZXJzaW9uIjoidjI5OCJ9\n"
+     * , "verify", "1bc8efad21b6f4e0b0113600e581d973")
+     *
+     * @param view
+     */
     private void initView(View view) {
         RecyclerView listView = (RecyclerView) view.findViewById(R.id.lv_list_view);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());

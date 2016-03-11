@@ -19,6 +19,7 @@ import com.whl.weekendmanager.activity.HandPickActivity;
 import com.whl.weekendmanager.adapter.AreaGVAdapter;
 import com.whl.weekendmanager.bean.AreaBean;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.util.Constant;
 import com.whl.weekendmanager.util.Utils;
 
 import org.json.JSONArray;
@@ -63,7 +64,7 @@ public class AreaFragment extends BaseFragment {
      */
     private void requestData() {
 //        String param = "{\"app_id\":\"200003\",\"params\":\"eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjowLCJ2ZXJz\\naW9uIjoidjI5OCJ9\\n\",\"verify\":\"9d0a68d3a561120218a176ef533798e3\"}";
-        NetControl.getInstance().postAsynParam("v29/discover/grouptaglist", new NetControl.StringCallback() {
+        NetControl.getInstance().postAsyn("v29/discover/grouptaglist", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
                 swipe.setRefreshing(false);
@@ -85,9 +86,15 @@ public class AreaFragment extends BaseFragment {
                 gvAdapter.notifyDataSetChanged();
 
             }
-        }, Utils.buildJosonParam("app_id", "200003", "params", "eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjoyMCwidmVy\n" +
-                "c2lvbiI6InYyOTgifQ==\n", "verify", "7bdfe3a467310cc5a980e866a310795f"));
-
+        }, Utils.buildJosonParam("city_id", Constant.CITY_ID_BEIJING,
+                "curpage",1,
+                "group_id",-1,
+                "perpage",20,
+                "version","v298"));
+/**
+ * Utils.buildJosonParam("app_id", "200003", "params", "eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjoyMCwidmVy\n" +
+ "c2lvbiI6InYyOTgifQ==\n", "verify", "7bdfe3a467310cc5a980e866a310795f")
+ */
     }
 
     /**

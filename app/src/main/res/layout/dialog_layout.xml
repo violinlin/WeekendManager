@@ -21,6 +21,9 @@
         android:layout_marginTop="20dp">
 
         <TextView
+            android:drawableLeft="@drawable/recommend_dialog_map"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
             android:id="@+id/dialog_tv_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,6 +34,7 @@
             android:id="@+id/dialog_tv_location_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_alignParentRight="true"
             android:src="@drawable/arrow_gray" />
 
@@ -40,6 +44,7 @@
             android:layout_below="@id/dialog_tv_location"
             android:layout_marginTop="20dp"
             android:text="海淀区"
+            android:layout_marginLeft="30dp"
             android:textColor="#9e9e9e" />
     </RelativeLayout>
 
@@ -58,6 +63,9 @@
         android:layout_below="@id/dialog_view"
         android:layout_marginTop="20dp"
         android:text="11:00"
+        android:drawableLeft="@drawable/recommend_dialog_time"
+        android:gravity="center_vertical"
+        android:drawablePadding="5dp"
         android:textColor="#9e9e9e" />
 
     <View

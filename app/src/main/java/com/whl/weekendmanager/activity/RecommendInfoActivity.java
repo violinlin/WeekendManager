@@ -39,11 +39,13 @@ import java.util.List;
 public class RecommendInfoActivity extends Activity {
     private List<ArticleBean.ContentBean> datas;
     private RecommendInfoAdapter adapter;
+    int articleID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recommend_info_activity);
+        articleID = getIntent().getIntExtra("articleid", 26026);
         initView();
         initDialog();
         requestData();
@@ -110,7 +112,7 @@ public class RecommendInfoActivity extends Activity {
 
     private void requestData() {
 //        http://apiv30.chengmi.com/v29/article/view HTTP/1.1
-        NetControl.getInstance().postAsynParam("v29/article/view", new NetControl.StringCallback() {
+        NetControl.getInstance().postAsyn("v29/article/view", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
 
@@ -133,10 +135,14 @@ public class RecommendInfoActivity extends Activity {
                 adapter.notifyDataSetChanged();
 
             }
-        }, Utils.buildJosonParam("app_id", "200003"
-                , "params", "eyJhY2Nlc3NfdG9rZW4iOiIiLCJsbmciOiIxMTYuMzY1MzIiLCJsYXQiOiI0MC4wMzMzMjQiLCJh\n" +
-                        "cnRpY2xlX2lkIjoyNjAyNywiY2l0eV9pZCI6MTEsInZlcnNpb24iOiJ2Mjk4In0=\n",
-                "verify", "1065a3573f31295842202b08cde7e7e8"));
+        }, Utils.buildJosonParam("access_token","","lng","116.321853",
+                "lat","39.954206","article_id",articleID,"city_id",11,"version","v298"));
     }
 
 }
+/**
+ * Utils.buildJosonParam("app_id", "200003"
+ * , "params", "eyJhY2Nlc3NfdG9rZW4iOiIiLCJsbmciOiIxMTYuMzY1MzIiLCJsYXQiOiI0MC4wMzMzMjQiLCJh\n" +
+ * "cnRpY2xlX2lkIjoyNjAyNywiY2l0eV9pZCI6MTEsInZlcnNpb24iOiJ2Mjk4In0=\n",
+ * "verify", "1065a3573f31295842202b08cde7e7e8")
+ */
