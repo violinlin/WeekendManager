@@ -24,6 +24,13 @@ public class NearFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+    private boolean canRefresh = true;
+
+    public NearFragment(boolean canRefresh) {
+        this.canRefresh = canRefresh;
+
+    }
+
     FrameLayout frameLayout;
 
     @Override
@@ -37,7 +44,7 @@ public class NearFragment extends BaseFragment {
         return view;
     }
 
-    NearFragmentNormal fragmentNormal = new NearFragmentNormal();
+    NearFragmentNormal fragmentNormal = new NearFragmentNormal(canRefresh);
     NearFragmentMap fragmentMap = new NearFragmentMap();
 
     @Override

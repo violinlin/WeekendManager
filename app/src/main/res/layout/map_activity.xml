@@ -1,9 +1,13 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.whl.weekendmanager.activity.MapActivity">
-
+<com.whl.weekendmanager.kit.ToolBar
+    android:id="@+id/too_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"></com.whl.weekendmanager.kit.ToolBar>
     <com.amap.api.maps2d.MapView
         android:id="@+id/mv_map_view"
         android:layout_width="match_parent"
@@ -11,4 +15,4 @@
 
         />
 
-</RelativeLayout>
+</LinearLayout>

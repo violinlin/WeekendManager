@@ -85,7 +85,7 @@ public class NearFragmentMap extends Fragment implements LocationSource,
         myLocationStyle.strokeWidth(1.0f);// 设置圆形的边框粗细
         aMap.setMyLocationStyle(myLocationStyle);
         aMap.setLocationSource(this);// 设置定位监听
-        aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
+        aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // aMap.setMyLocationType()
     }
@@ -161,7 +161,7 @@ public class NearFragmentMap extends Fragment implements LocationSource,
             // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
             // 在定位结束后，在合适的生命周期调用onDestroy()方法
             // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
-            mlocationClient.startLocation();
+//            mlocationClient.startLocation();
         }
     }
 
@@ -175,6 +175,7 @@ public class NearFragmentMap extends Fragment implements LocationSource,
         mlocationClient = null;
 
     }
+
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {

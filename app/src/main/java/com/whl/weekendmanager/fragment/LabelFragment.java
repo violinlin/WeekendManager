@@ -2,6 +2,7 @@ package com.whl.weekendmanager.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,6 +25,7 @@ import com.whl.weekendmanager.bean.LabelBean;
 import com.whl.weekendmanager.interfacep.OnMyItemClickListener;
 import com.whl.weekendmanager.kit.FlowLayout;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.progress.ProgressHUD;
 import com.whl.weekendmanager.util.Constant;
 import com.whl.weekendmanager.util.Utils;
 
@@ -67,6 +69,8 @@ public class LabelFragment extends BaseFragment {
     private void initView(View view) {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_label);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swip_layout);
+        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#6BD3FF"),
+                Color.parseColor("#FF7121"),Color.parseColor("#FFFF00"));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -98,16 +102,18 @@ public class LabelFragment extends BaseFragment {
      */
     private void requestData() {
 //        String param = "{\"app_id\":\"200003\",\"params\":\"eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjoyMCwidmVy\\nc2lvbiI6InYyOTgifQ\\u003d\\u003d\\n\",\"verify\":\"7bdfe3a467310cc5a980e866a310795f\"}";
+        ProgressHUD.getInstance(getContext()).show();
         NetControl.getInstance().postAsyn("v29/discover/grouptaglist", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
                 swipeRefreshLayout.setRefreshing(false);
-
+                ProgressHUD.getInstance(getContext()).cancel();
             }
 
             @Override
             public void onResponse(JSONObject responseJSON) throws JSONException {
 //                Log.d("whl", responseJSON.toString());
+                ProgressHUD.getInstance(getContext()).cancel();
                 swipeRefreshLayout.setRefreshing(false);
                 JSONObject body = responseJSON.getJSONObject("body");
                 JSONArray areaList = body.getJSONArray("special_list");

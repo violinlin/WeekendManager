@@ -18,6 +18,7 @@ import com.whl.weekendmanager.R;
 import com.whl.weekendmanager.bean.ArticleBean;
 import com.whl.weekendmanager.kit.CircleImageView;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.progress.ProgressHUD;
 import com.whl.weekendmanager.util.Constant;
 import com.whl.weekendmanager.util.Utils;
 
@@ -69,14 +70,16 @@ public class NearRecommendFragment extends android.support.v4.app.Fragment {
 
     private void requestData() {
 //        http://apiv30.chengmi.com/v29/article/view HTTP/1.1
+        ProgressHUD.getInstance(getContext()).show();
         NetControl.getInstance().postAsyn("v29/article/view", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
-
+                ProgressHUD.getInstance(getContext()).cancel();
             }
 
             @Override
             public void onResponse(JSONObject responseJSON) throws JSONException {
+                ProgressHUD.getInstance(getContext()).cancel();
                 Log.d("whl",responseJSON.toString());
                 JSONObject bodyJSON = responseJSON.getJSONObject("body");
                 JSONObject articleInfo = bodyJSON.getJSONObject("article_info");

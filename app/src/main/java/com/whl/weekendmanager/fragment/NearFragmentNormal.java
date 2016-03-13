@@ -3,6 +3,7 @@ package com.whl.weekendmanager.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -35,6 +36,7 @@ import com.whl.weekendmanager.bean.NearTagBean;
 import com.whl.weekendmanager.interfacep.OnChangeFragmentListener;
 import com.whl.weekendmanager.interfacep.OnMyItemClickListener;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.progress.ProgressHUD;
 import com.whl.weekendmanager.util.Utils;
 
 import org.json.JSONArray;
@@ -61,11 +63,15 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
     private Animation animEnter;
     private Animation animExit;
     private String param = "";
+    private boolean canRefresh = true;
 
     public NearFragmentNormal() {
         // Required empty public constructor
     }
 
+    public NearFragmentNormal(boolean canRefresh) {
+        this.canRefresh = canRefresh;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,14 +88,17 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
      * 网络数据请求
      */
     private void requestData(int tagID, String sortway) {
+        ProgressHUD.getInstance(getContext()).show();
         NetControl.getInstance().postAsyn("v29/section/list", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
                 swipeRefreshLayout.setRefreshing(false);
+                ProgressHUD.getInstance(getContext()).cancel();
             }
 
             @Override
             public void onResponse(JSONObject responseJSON) throws JSONException {
+                ProgressHUD.getInstance(getContext()).cancel();
                 swipeRefreshLayout.setRefreshing(false);
                 Log.d("whl", responseJSON.toString());
                 JSONObject body = responseJSON.getJSONObject("body");
@@ -122,6 +131,9 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
 
     private void initView(View view) {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swip_layout);
+        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#6BD3FF"),
+                Color.parseColor("#FF7121"),Color.parseColor("#FFFF00"));
+        swipeRefreshLayout.setEnabled(canRefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -174,7 +186,7 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
                         break;
                     case R.id.rb_near_drink:
                         groupID = "2";
-                        Toast.makeText(getContext(),"喝",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(),"喝",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.rb_near_play:
                         groupID = "3";
@@ -230,14 +242,16 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
     public String groupID = "0";
 
     private void requestTagData(final NearTagAdapter tagAdapter, final List<NearTagBean> tagDatas) {
+        ProgressHUD.getInstance(getContext()).show();
         NetControl.getInstance().postAsyn("v29/section/grouptaglist", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
-
+                ProgressHUD.getInstance(getContext()).cancel();
             }
 
             @Override
             public void onResponse(JSONObject responseJSON) throws JSONException {
+                ProgressHUD.getInstance(getContext()).cancel();
                 Log.d("whl", "near_tag" + responseJSON.toString());
                 JSONObject bodyJSON = responseJSON.getJSONObject("body");
                 JSONArray tagArray = bodyJSON.getJSONArray("tag_list");
@@ -291,8 +305,8 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
                 adapter.notifyDataSetChanged();
                 datas.clear();
                 requestData(tagID, sortway);
-                sortLayout.setVisibility(View.GONE);
                 sortLayout.setAnimation(animExit);
+                sortLayout.setVisibility(View.GONE);
             }
         });
         TextView hotTV = (TextView) view.findViewById(R.id.tv_near_hot);
@@ -303,8 +317,8 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
                 datas.clear();
                 adapter.notifyDataSetChanged();
                 requestData(tagID, sortway);
-                sortLayout.setVisibility(View.GONE);
                 sortLayout.setAnimation(animExit);
+                sortLayout.setVisibility(View.GONE);
             }
         });
         TextView latestTV = (TextView) view.findViewById(R.id.tv_near_latest);
@@ -315,22 +329,22 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
                 datas.clear();
                 adapter.notifyDataSetChanged();
                 requestData(tagID, sortway);
-                sortLayout.setVisibility(View.GONE);
                 sortLayout.setAnimation(animExit);
+                sortLayout.setVisibility(View.GONE);
             }
         });
         ImageView cancelIV = (ImageView) view.findViewById(R.id.iv_near_backbtn);
         cancelIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sortLayout.setVisibility(View.GONE);
                 sortLayout.setAnimation(animExit);
+                sortLayout.setVisibility(View.GONE);
             }
         });
     }
 
     //初始化tab标签布局
-    private void initTabLayout(View view) {
+    private void initTabLayout(final View view) {
         final TextView classfyTV = (TextView) view.findViewById(R.id.tv_near_classfy);
         classfyTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -363,8 +377,8 @@ public class NearFragmentNormal extends android.support.v4.app.Fragment {
      * 加载动画资源
      */
     private void loadAnim() {
-        animEnter = AnimationUtils.loadAnimation(getActivity(), R.anim.list_enter);
-        animExit = AnimationUtils.loadAnimation(getActivity(), R.anim.list_exit);
+        animEnter = AnimationUtils.loadAnimation(getContext(), R.anim.list_enter);
+        animExit = AnimationUtils.loadAnimation(getContext(), R.anim.list_exit);
     }
 
 //    /**

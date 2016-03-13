@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lv_recommend_list"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:divider="#fff"
-    android:dividerHeight="10dp"
-    android:scrollbars="none">
+    android:orientation="vertical">
 
-</ListView>
+    <com.whl.weekendmanager.kit.ToolBar
+        android:id="@+id/too_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.whl.weekendmanager.kit.ToolBar>
+
+    <ListView
+        android:id="@+id/lv_recommend_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#fff"
+        android:dividerHeight="10dp"
+        android:orientation="vertical"
+        android:scrollbars="none"></ListView>
+</LinearLayout>

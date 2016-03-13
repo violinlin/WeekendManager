@@ -5,20 +5,10 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#02C6B4">
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/back_icon" />
-    </LinearLayout>
-
+<com.whl.weekendmanager.kit.ToolBar
+    android:id="@+id/too_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"></com.whl.weekendmanager.kit.ToolBar>
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

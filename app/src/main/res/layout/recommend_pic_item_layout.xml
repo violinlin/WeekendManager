@@ -3,4 +3,4 @@
     android:id="@+id/iv_recommend_pic"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:scaleType="centerCrop"></ImageView>
+    android:scaleType="fitXY"></ImageView>

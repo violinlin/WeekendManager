@@ -19,6 +19,7 @@ import com.whl.weekendmanager.adapter.CommentAdapter;
 import com.whl.weekendmanager.bean.CommentBean;
 import com.whl.weekendmanager.kit.CircleImageView;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.progress.ProgressHUD;
 import com.whl.weekendmanager.util.Utils;
 
 import org.json.JSONArray;
@@ -56,14 +57,17 @@ public class NearCommentFragment extends android.support.v4.app.Fragment {
 
     private void requestData() {
 //        http://apiv30.chengmi.com/v29/remark/sectionremarklist HTTP/1.1
+        ProgressHUD.getInstance(getContext()).show();
         NetControl.getInstance().postAsyn("v29/remark/sectionremarklist", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
+                ProgressHUD.getInstance(getContext()).cancel();
 
             }
 
             @Override
             public void onResponse(JSONObject responseJSON) throws JSONException {
+                ProgressHUD.getInstance(getContext()).cancel();
 //                Log.d("whl",responseJSON.toString());
                 JSONObject body = responseJSON.getJSONObject("body");
                 JSONArray array = body.getJSONArray("remark_list");

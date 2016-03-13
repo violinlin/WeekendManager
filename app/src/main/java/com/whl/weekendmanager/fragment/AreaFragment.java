@@ -2,6 +2,7 @@ package com.whl.weekendmanager.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,6 +20,7 @@ import com.whl.weekendmanager.activity.HandPickActivity;
 import com.whl.weekendmanager.adapter.AreaGVAdapter;
 import com.whl.weekendmanager.bean.AreaBean;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.progress.ProgressHUD;
 import com.whl.weekendmanager.util.Constant;
 import com.whl.weekendmanager.util.Utils;
 
@@ -64,15 +66,17 @@ public class AreaFragment extends BaseFragment {
      */
     private void requestData() {
 //        String param = "{\"app_id\":\"200003\",\"params\":\"eyJjaXR5X2lkIjoxMSwiY3VycGFnZSI6MSwiZ3JvdXBfaWQiOi0xLCJwZXJwYWdlIjowLCJ2ZXJz\\naW9uIjoidjI5OCJ9\\n\",\"verify\":\"9d0a68d3a561120218a176ef533798e3\"}";
+        ProgressHUD.getInstance(getContext()).show();
         NetControl.getInstance().postAsyn("v29/discover/grouptaglist", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
                 swipe.setRefreshing(false);
-
+                ProgressHUD.getInstance(getContext()).cancel();
             }
 
             @Override
             public void onResponse(JSONObject responseJSON) throws JSONException {
+                ProgressHUD.getInstance(getContext()).cancel();
                 Log.d("whl", responseJSON.toString());
                 swipe.setRefreshing(false);
                 JSONObject body = responseJSON.getJSONObject("body");
@@ -104,6 +108,8 @@ public class AreaFragment extends BaseFragment {
      */
     private void initView(View view) {
         swipe = (SwipeRefreshLayout) view.findViewById(R.id.swip_layout);
+        swipe.setColorSchemeColors(Color.parseColor("#6BD3FF"),
+                Color.parseColor("#FF7121"),Color.parseColor("#FFFF00"));
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

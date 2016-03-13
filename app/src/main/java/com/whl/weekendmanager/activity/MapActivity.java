@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -23,6 +24,7 @@ import com.amap.api.maps2d.model.MyLocationStyle;
 import com.whl.weekendmanager.R;
 import com.whl.weekendmanager.bean.NearBean;
 import com.whl.weekendmanager.interfacep.OnChangeFragmentListener;
+import com.whl.weekendmanager.kit.ToolBar;
 import com.whl.weekendmanager.util.Utils;
 
 import java.util.List;
@@ -46,6 +48,19 @@ public class MapActivity extends Activity implements LocationSource,
         name = getIntent().getStringExtra("name");
         lat = getIntent().getDoubleExtra("lat", 39.908692);
         lng = getIntent().getDoubleExtra("lng", 116.397477);
+        initView(savedInstanceState);
+
+    }
+
+    private void initView(Bundle savedInstanceState) {
+        ToolBar toolBar = (ToolBar) findViewById(R.id.too_bar);
+        toolBar.backIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        toolBar.centerTV.setVisibility(View.GONE);
         mapView = (MapView) findViewById(R.id.mv_map_view);
         mapView.onCreate(savedInstanceState);
         aMap = mapView.getMap();

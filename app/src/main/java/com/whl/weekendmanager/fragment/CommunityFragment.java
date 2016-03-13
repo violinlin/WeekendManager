@@ -3,6 +3,7 @@ package com.whl.weekendmanager.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -108,6 +109,9 @@ public class CommunityFragment extends BaseFragment {
 
     private void initView(View view) {
         swipLayout = (SwipeRefreshLayout) view.findViewById(R.id.swip_layout);
+        swipLayout.setColorSchemeColors(Color.parseColor("#6BD3FF"),
+                Color.parseColor("#FF7121"),Color.parseColor("#FFFF00"));
+        swipLayout.setEnabled(isLoadHead);
         swipLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

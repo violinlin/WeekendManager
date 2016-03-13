@@ -20,7 +20,9 @@ import com.whl.weekendmanager.dialog.MyDialog;
 import com.whl.weekendmanager.interfacep.MyOnCancelListener;
 import com.whl.weekendmanager.interfacep.OnMyItemClickListener;
 import com.whl.weekendmanager.kit.CircleImageView;
+import com.whl.weekendmanager.kit.ToolBar;
 import com.whl.weekendmanager.netcontrol.NetControl;
+import com.whl.weekendmanager.progress.ProgressHUD;
 import com.whl.weekendmanager.util.Utils;
 
 import org.json.JSONException;
@@ -66,6 +68,15 @@ public class RecommendInfoActivity extends Activity {
     ArticleBean articleBean;
 
     private void initView() {
+        ToolBar toolBar = (ToolBar) findViewById(R.id.too_bar);
+        toolBar.centerTV.setVisibility(View.GONE);
+        toolBar.backIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         recommendLV = (ListView) findViewById(R.id.lv_recommend_list);
         datas = new LinkedList<>();
         adapter = new RecommendInfoAdapter(this, datas);
@@ -82,7 +93,7 @@ public class RecommendInfoActivity extends Activity {
                 if (articleBean != null) {
                     myDialog.setLocation(articleBean.getPoiInfoBean().getPoi_name());
                     myDialog.setLocationInfo(articleBean.getPoiInfoBean().getPoi_address());
-                    myDialog.setDate(articleBean.getCreated_at() + "");
+                    myDialog.setDate("10:00-22:00");
                     myDialog.setOnLocationClickListener(new OnMyItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
@@ -94,6 +105,7 @@ public class RecommendInfoActivity extends Activity {
                             intent.putExtra("lng", lng);
                             intent.putExtra("name", name);
                             startActivity(intent);
+                            myDialog.dismiss();
                         }
                     });
                     myDialog.setCancelListener(new MyOnCancelListener() {
@@ -112,14 +124,16 @@ public class RecommendInfoActivity extends Activity {
 
     private void requestData() {
 //        http://apiv30.chengmi.com/v29/article/view HTTP/1.1
+        ProgressHUD.getInstance(this).show();
         NetControl.getInstance().postAsyn("v29/article/view", new NetControl.StringCallback() {
             @Override
             public void onFailure(Request request, IOException e) {
-
+                ProgressHUD.getInstance(RecommendInfoActivity.this).cancel();
             }
 
             @Override
             public void onResponse(JSONObject responseJSON) throws JSONException {
+                ProgressHUD.getInstance(RecommendInfoActivity.this).cancel();
                 JSONObject bodyJSON = responseJSON.getJSONObject("body");
                 JSONObject articleInfo = bodyJSON.getJSONObject("article_info");
                 articleBean = new ArticleBean();
@@ -135,8 +149,8 @@ public class RecommendInfoActivity extends Activity {
                 adapter.notifyDataSetChanged();
 
             }
-        }, Utils.buildJosonParam("access_token","","lng","116.321853",
-                "lat","39.954206","article_id",articleID,"city_id",11,"version","v298"));
+        }, Utils.buildJosonParam("access_token", "", "lng", "116.321853",
+                "lat", "39.954206", "article_id", articleID, "city_id", 11, "version", "v298"));
     }
 
 }
